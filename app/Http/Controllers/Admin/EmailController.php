@@ -37,7 +37,7 @@ class EmailController extends Controller
     		'reply' => 'required|min:10',
     	]);
 
-        Mail::send('admin.emails.reply_email', ['reply' => $request->reply], function ($m) use ($request) {
+        Mail::send('admin.emails.reply_email', ['reply' => $request->reply, 'title' => $request->subject], function ($m) use ($request) {
             $m->from(env('MAIL_USERNAME', $request->from));
             $m->replyTo($request->from);
             $m->bcc($request->from);

@@ -1,10 +1,10 @@
-	@include('admin.layouts._header')
+@include('admin.layouts._header')
 
-	@yield('page_header_before')
+@yield('nav_before')
 
-	@include('admin.layouts._nav-main')
+@include('admin.layouts._nav-main')
 
-	@yield('page_header_after')
+@yield('nav_after')
 
 <div class="container-fluid">
 {{-- Flashing messages --}}
@@ -32,4 +32,4 @@
 	@yield('page_content')
 </div>
 
-	@include('admin.layouts._footer')
+@include('admin.layouts._footer')

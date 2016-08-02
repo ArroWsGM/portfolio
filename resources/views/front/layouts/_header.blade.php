@@ -20,7 +20,7 @@
 	{{--<link rel="stylesheet" type="text/css" href="{{ elixir('css/style.css') }}">--}}
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 
-	@yield('stylesheets')
+	@yield('styles')
 	
 	<!-- Вставка HTML5 поєднується з Respond.js для підтримки в IE8 елементів HTML5 та медіа-запитів -->
 	<!-- ЗАСТЕРЕЖЕННЯ: файл Respond.js не працює, якщо ви проглядаєте сторінку відкривши її з файлової системи -->

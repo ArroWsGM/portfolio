@@ -17,7 +17,7 @@
 <script src="/js/jquery.inputmask.bundle.js"></script>
 {{-- Підключення додаткового файлу script.js --}}
 <script src="/js/script.min.js"></script>
-@yield('scripts')
+
 {{-- Modals --}}
 @if(isset($cms_about->cms_promo))
 	<div class="modal" id="cms-build-modal" tabindex="-1" role="dialog" aria-labelledby="cms-build-modal-label">
@@ -149,5 +149,8 @@
 @endif
 {{-- Loading --}}
 <div class="loadanimation"><div class="spinner text-red"><i class="fa fa-gear fa-spin"></i></div></div>
+
+@yield('scripts')
+
 </body>
 </html>

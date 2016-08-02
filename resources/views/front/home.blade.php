@@ -30,12 +30,5 @@
 		<div class="control prev"><span class="glyphicon glyphicon-chevron-left"></span></div>
 		<div class="control next"><span class="glyphicon glyphicon-chevron-right"></span></div>
 	</div>
-	{{--
-	<div class="row">
-		<col-sm-12>
-			<pre>{{var_dump($projects)}}</pre>
-		</col-sm-12>
-	</div>
-	--}}
 </section>
 @stop

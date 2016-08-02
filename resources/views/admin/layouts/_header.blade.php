@@ -19,7 +19,7 @@
 	<!-- Головий файл стиля-->
 	<link rel="stylesheet" type="text/css" href="/css/style_admin.css">
 
-	@yield('admin.layouts.head')
+	@yield('styles')
 	
 	<!-- Вставка HTML5 поєднується з Respond.js для підтримки в IE8 елементів HTML5 та медіа-запитів -->
 	<!-- ЗАСТЕРЕЖЕННЯ: файл Respond.js не працює, якщо ви проглядаєте сторінку відкривши її з файлової системи -->

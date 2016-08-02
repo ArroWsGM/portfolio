@@ -77,8 +77,6 @@
 			@endif
 		</div>
 	</div>
-	{{--
-	--}}
 	@eval($video = $project->galleries->where('item_type', 'video'))
 	@if($video->count())
 	@foreach($video as $video)
