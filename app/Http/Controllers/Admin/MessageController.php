@@ -72,7 +72,7 @@ class MessageController extends Controller
     public function removeMessage(Message $message)
     {
     	if(Message::destroy($message->id))
-    		return back()->with('msg_success', 'Message deleted.');
+    		return response()->json(['status' => 'success', 'message' => 'Message successfully deleted.']);
     }
 
     public function viewMessage(Message $message)

@@ -17,7 +17,7 @@
 				else
 					$url = $all_settings['img_placeholder'];
 			?>
-			<div class="carousel-item" data-url="{{url('/get/' . $project->id)}}">
+			<div class="carousel-item" data-url="{{route('front.project', $project->id)}}">
 				<img src="{{url($url)}}" alt="{{$project->project_name}}">
 				<div class="project-title">
 					<h3>{{$project->project_name}}</h3>

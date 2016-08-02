@@ -9,7 +9,7 @@ function echo(string){
 /*****************************************
  *	Global variables
  *****************************************/
-
+var responseStatus, responseMsg;
 /*****************************************
  *	Functions
  *****************************************/
@@ -295,6 +295,31 @@ function setStatusAjax(data, token){
 		}
 	});
 }
+//destroy Message
+function destroyMessageAjax(url, token){
+	$.ajax({
+		url:url,
+		headers: {'X-CSRF-TOKEN': token},
+		type:'DELETE',
+		beforeSend: function(){
+			$('#alert-holder').empty();
+		},
+		success: function(json){
+				var className = json.status == 'success' ? 'success' : 'danger';
+				$('#alert-holder').append('<div class="alert alert-' + className + ' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+json.message+'</div>');
+				if(json.status == 'success'){
+					var id = url.split('/').pop();
+					$('.table-messages tr[data-id='+ id +']').remove();
+				}
+		},
+		error: function(event, jqxhr, settings, thrownError){
+			console.log(event.responseText);
+			console.log(jqxhr);
+			console.log(settings);
+			console.log(thrownError);
+		}
+	});
+}
 /*****************************************
  *	Event listeners
  *****************************************/
@@ -352,7 +377,7 @@ $(document).on('click', '.gallery-item .btn-delete', function(){
 
 	deleteGalleryItemAjax(url, token, item);
 });
-//delete projects gallery item
+//add project property
 $(document).on('click', '.property-add', function(){
 	var html = $(this).html(),
 	    id = $(this).data('id').toString(),
@@ -402,6 +427,20 @@ $(document).on('change', '#set-status', function(){
 	data.node = $(this).parents('tr');
 
 	setStatusAjax(data, token);
+});
+//delete project property
+$(document).on('click', '.btn-delete-message', function(e){
+	e = e || window.event;
+	e.preventDefault();
+
+	var a = confirm('Delete message?');
+
+	if(a){	
+		var token = $('#_token').data('token'),
+			url = $(this).attr('href');
+
+		destroyMessageAjax(url, token);
+	} else return false;
 });
 /*****************************************
  *

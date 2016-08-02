@@ -79,7 +79,7 @@
 		</header>
 		<div class="row mtop-15">
 			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-				<form id="message-form" class="form-horizontal form-black" method="POST" action="{{url('/sendmessage')}}">
+				<form id="message-form" class="form-horizontal form-black" method="POST" action="{{route('front.message')}}">
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-10">

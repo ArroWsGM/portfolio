@@ -74,8 +74,8 @@
 							<a href="{{url('admin/blacklist/add/' . $message->ip)}}" class="btn btn-warning">Blacklist It</a>
 							@endif
 							@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
-							<a href="{{url('admin/messages/view/' . $message->id)}}" class="btn btn-primary">View</a>
-							<a href="{{url('admin/messages/remove/' . $message->id)}}" class="btn btn-danger">Delete</a>
+							<a href="{{route('messages.show', $message->id)}}" class="btn btn-primary">View</a>
+							<a href="{{route('messages.destroy', $message->id)}}" class="btn btn-danger btn-delete-message">Delete</a>
 							@else
 							<a href="#" class="btn btn-primary">View</a>
 							<a href="#" class="btn btn-danger">Delete</a>

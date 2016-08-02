@@ -196,7 +196,7 @@ function getProjectAjax(url, token){
 		url:url,
 		//headers: {'X-CSRF-TOKEN': token},
 		//data:{_token: token},
-		type:'POST',
+		type:'GET',
 		beforeSend: function(){
 			$('#project').empty();
 		},

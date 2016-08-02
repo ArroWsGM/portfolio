@@ -17,7 +17,7 @@
 			<ul class="nav navbar-nav">
 				<li{!! $view_name == 'admin.projects' ? ' class="active"' : '' !!}><a href="{{url('/admin/projects')}}">Projects</a></li>
 				<li{!! $view_name == 'admin.project_properties' ? ' class="active"' : '' !!}><a href="{{url('/admin/properties')}}">Properties</a></li>
-				<li{!! $view_name == 'admin.messages' ? ' class="active"' : '' !!}><a href="{{url('/admin/messages')}}">Messages</a></li>
+				<li{!! $view_name == 'admin.messages' ? ' class="active"' : '' !!}><a href="{{route('messages.index')}}">Messages</a></li>
 				<li{!! $view_name == 'admin.users' ? ' class="active"' : '' !!}><a href="{{url('/admin/users')}}">Users</a></li>
 				@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
 				<li{!! $view_name == 'admin.settings' ? ' class="active"' : '' !!}><a href="{{url('/admin/settings')}}">Settings</a></li>
