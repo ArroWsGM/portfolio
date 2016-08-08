@@ -3,7 +3,7 @@
 @section('page_content')
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
-			<form class="form-horizontal" action="{{url('/admin/email/send')}}" method="POST">
+			<form class="form-horizontal" action="{{route('email.send')}}" method="POST">
 				{{csrf_field()}}
 				<div class="form-group{{($errors->has('name') || $errors->has('email')) ? ' has-error' : ''}}">
 					<label for="to" class="col-sm-1 control-label">To:</label>
@@ -40,7 +40,7 @@
 				<div class="form-group{{$errors->has('reply') ? ' has-error' : ''}}">
 <?php
 //Compose message cite
-	$reply = '<br><br><p> On ';
+	$reply = '<p></p><p style="margin-top: 40px;"> On ';
 	$reply .= $message->created_at->format('D, M d, Y');
 	$reply .= ' at ';
 	$reply .= $message->created_at->format('H:m');
@@ -65,7 +65,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<a href="{{url('admin/messages')}}" class="btn btn-default pull-left"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to messages</a>
+						<a href="{{Session::has('back_to') ? Session::get('back_to') : url('admin/messages')}}" class="btn btn-default pull-left"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to messages</a>
 						<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button>
 					</div>
 				</div>

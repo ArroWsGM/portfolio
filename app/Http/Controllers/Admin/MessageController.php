@@ -24,6 +24,9 @@ class MessageController extends Controller
 
     public function index()
     {
+        if(Session::has('back_to'))
+            Session::forget('back_to');
+
     	$all_settings = Setting::getAllSettings();
 
     	$per_page = isset($all_settings['per_page_admin']) ? $all_settings['per_page_admin'] : 50;
@@ -37,19 +40,46 @@ class MessageController extends Controller
 			$messages = Message::with(['status', 'blacklisted'])->orderBy('created_at', 'desc')->paginate($per_page);
     	}
 
-
 		$statuses = MessageStatus::all();
 
 		$page_title = 'Messages';
     	return view('admin.messages', compact('page_title', 'messages', 'statuses'));
     }
 
-    public function setStatus(Request $request, Message $message)
+    public function viewMessage(Request $request, Message $message)
+    {
+        if(!Session::has('back_to'))
+            Session::put('back_to', $request->server('HTTP_REFERER'));
+
+        $message = Message::with(['status', 'blacklisted'])->find($message->id);
+
+        $statuses = MessageStatus::all();
+
+        $page_title = 'View message';
+
+        return view('admin.message', compact('message', 'page_title', 'statuses', 'dump'));
+    }
+
+    public function removeMessage(Message $message)
+    {
+        if(Message::destroy($message->id))
+            return response()->json(['status' => 'success', 'message' => 'Message successfully deleted.']);
+    }
+
+    public function updateStatus(Request $request, Message $message)
     {
     	if(Message::where('id', $message->id)->update(['status_id' => $request->id]))
     		return ['success' => 'Status changed'];
     	else
     		return ['success' => 'Error when trying to change status'];
+    }
+
+    public function blacklistAdd($blacklisted)
+    {
+        if(BlacklistIP::create(['ip' => $blacklisted]))
+            return back()->with('msg_success', 'IP ' . $blacklisted . ' successfully added to blacklist.');
+        else
+            return back()->with('msg_error', 'Error occured when adding IP ' . $blacklisted . ' from blacklist.');
     }
 
     public function blacklistRemove(BlacklistIP $blacklisted)
@@ -58,31 +88,5 @@ class MessageController extends Controller
     		return back()->with('msg_success', 'IP ' . $blacklisted->ip . ' successfully removed from blacklist.');
     	else
     		return back()->with('msg_error', 'Error occured when removing IP ' . $blacklisted->ip . ' from blacklist.');
-    }
-
-    public function blacklistAdd($blacklisted)
-    {
-    	//dd($blacklisted);
-    	if(BlacklistIP::create(['ip' => $blacklisted]))
-    		return back()->with('msg_success', 'IP ' . $blacklisted . ' successfully added to blacklist.');
-    	else
-    		return back()->with('msg_error', 'Error occured when adding IP ' . $blacklisted . ' from blacklist.');
-    }
-
-    public function removeMessage(Message $message)
-    {
-    	if(Message::destroy($message->id))
-    		return response()->json(['status' => 'success', 'message' => 'Message successfully deleted.']);
-    }
-
-    public function viewMessage(Message $message)
-    {
-    	$message = Message::with(['status', 'blacklisted'])->find($message->id);
-
-    	$statuses = MessageStatus::all();
-
-    	$page_title = 'View message';
-
-    	return view('admin.message', compact('message', 'page_title', 'statuses'));
     }
 }

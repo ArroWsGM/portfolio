@@ -48,30 +48,49 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::post('users/update', 'Admin\AdminController@updateUser');
 		Route::post('users/edit/{id}', 'Admin\AdminController@editUser');
 		//projects
-		Route::get('projects/add', 'Admin\ProjectController@add');
-		Route::get('projects/remove/{project}', 'Admin\ProjectController@removeProject');
-		Route::post('projects/update', 'Admin\ProjectController@create');
-		Route::post('projects/update/{project}', 'Admin\ProjectController@update');
-		Route::post('projects/gallery/remove/{gallery}', 'Admin\ProjectController@removeGalleryItem');
-		Route::post('projects/property/remove/{property}', 'Admin\ProjectController@removeProjectProperty');
+		Route::group(['prefix' => 'projects'], function() {
+			Route::get('add', 'Admin\ProjectController@add');
+			Route::get('remove/{project}', 'Admin\ProjectController@removeProject');
+			Route::post('update', 'Admin\ProjectController@create');
+			Route::post('update/{project}', 'Admin\ProjectController@update');
+			Route::post('gallery/remove/{gallery}', 'Admin\ProjectController@removeGalleryItem');
+			Route::post('property/remove/{property}', 'Admin\ProjectController@removeProjectProperty');
+		});
 		//project properties
 		Route::get('properties/remove/{property}', 'Admin\PropertyController@removeProperty');
 		Route::post('properties/add', 'Admin\PropertyController@addProperty');
 		Route::post('properties/update', 'Admin\PropertyController@updateProperty');
 		//Messages
-		Route::get('messages/{message}', [
-				'as' => 'messages.show',
-				'uses' => 'Admin\MessageController@viewMessage',
-			]);
-		Route::delete('messages/{message}', [
-				'as' => 'messages.destroy',
-				'uses' => 'Admin\MessageController@removeMessage',
-			]);
-		Route::post('setstatus/{message}', 'Admin\MessageController@setStatus');
-		Route::get('blacklist/remove/{blacklisted}', 'Admin\MessageController@blacklistRemove');
-		Route::get('blacklist/add/{blacklisted}', 'Admin\MessageController@blacklistAdd');
-		Route::get('replyto/{message}', 'Admin\EmailController@index');
-		Route::post('email/send', 'Admin\EmailController@sendEmail');
+		Route::group(['prefix' => 'messages'], function() {
+			Route::get('{message}', [
+					'as' => 'messages.show',
+					'uses' => 'Admin\MessageController@viewMessage',
+				]);
+			Route::delete('{message}', [
+					'as' => 'messages.destroy',
+					'uses' => 'Admin\MessageController@removeMessage',
+				]);
+			Route::put('updatestatus/{message}', [
+					'as' => 'messages.updatestatus',
+					'uses' => 'Admin\MessageController@updateStatus',
+				]);
+			Route::delete('blacklist/{blacklisted}', [
+					'as' => 'messages.blacklist.remove',
+					'uses' => 'Admin\MessageController@blacklistRemove',
+				]);
+			Route::post('blacklist/{blacklisted}', [
+					'as' => 'messages.blacklist.add',
+					'uses' => 'Admin\MessageController@blacklistAdd',
+				]);
+			Route::get('email/reply/{message}', [
+					'as' => 'email.reply',
+					'uses' => 'Admin\EmailController@index',
+				]);
+			Route::post('email/send', [
+					'as' => 'email.send',
+					'uses' => 'Admin\EmailController@sendEmail',
+				]);
+		});
 	});
 });
 

@@ -275,7 +275,7 @@ function setStatusAjax(data, token){
 		url:data.url,
 		data: {id: data.id},
 		headers: {'X-CSRF-TOKEN': token},
-		type:'POST',
+		type:'PUT',
 		beforeSend: function(){
 			$('#alert-holder').empty();
 		},

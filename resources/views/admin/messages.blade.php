@@ -61,7 +61,7 @@
 							{{$message->created_at}}
 						</td>
 						<td class="message-status">
-							<select class="form-control" id="set-status" data-url="{{url('/admin/setstatus/' . $message->id)}}">
+							<select class="form-control" id="set-status" data-url="{{route('messages.updatestatus', $message->id)}}">
 								@foreach($statuses as $status)
 								<option value="{{$status->id}}" data-class="{{$status->status_class}}" {{($message->status_id == $status->id) ? 'selected' : ''}}>{{$status->status_name}}</option>
 								@endforeach
@@ -69,9 +69,16 @@
 						</td>
 						<td class="action-buttons">
 							@if(is_object($message->blacklisted) && $message->blacklisted->count())
-							<a href="{{url('admin/blacklist/remove/' . $message->blacklisted['ip'])}}" class="btn btn-success">Un-Blacklist It</a>
+							<form action="{{route('messages.blacklist.remove', $message->blacklisted['ip'])}}" method="POST" class="mbot-15">
+								{{ csrf_field() }}
+								{{ method_field('DELETE') }}
+								<button type="submit" class="btn btn-success">Un-Blacklist It</button>
+							</form>
 							@else
-							<a href="{{url('admin/blacklist/add/' . $message->ip)}}" class="btn btn-warning">Blacklist It</a>
+							<form action="{{route('messages.blacklist.add', $message->ip)}}" method="POST" class="mbot-15">
+								{{ csrf_field() }}
+								<button type="submit" class="btn btn-warning">Blacklist It</button>
+							</form>
 							@endif
 							@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
 							<a href="{{route('messages.show', $message->id)}}" class="btn btn-primary">View</a>
