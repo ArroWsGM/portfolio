@@ -49,16 +49,15 @@ class PropertyController extends Controller
 		return Property::find($id);
     }
 
-    public function updateProperty(Request $request)
+    public function updateProperty(Request $request, Property $property)
     {
     	$this->validate($request, [
-    		'id' => 'required|numeric',
     		'property_name' => 'required|between:2,32',
     		'property_class' => 'required|between:2,32',
     		'property_group' => 'required|in:device,technology,browser',
     	]);
 
-		if(Property::find($request->id)->update($request->all())) {
+		if($property->update($request->all())) {
     		return ['success' => 'Property successfully updated', 'result' => $request->all()];
 		} else {
     		return ['error' => 'There is an error occured', 'result' => $request->all()];

@@ -3,6 +3,13 @@
 @footerHeight: 60px;
 @brandColor: #f4645f;
 @errorColor: #a94442;
+@bsDanger: #d9534f;
+@bsInfo: #5bc0de;
+@bsPrimary: #337ab7;
+@bsSuccess: #5cb85c;
+@bsWarning: #f0ad4e;
+@bsBgDanger: #f2dede;
+@bsBgSuccess: #dff0d8;
 
 .text-brand{
 	color: @brandColor;
@@ -18,20 +25,26 @@
 }
 .badge{
 	&.badge-warning{
-		background-color: #f0ad4e;
+		background-color: @bsWarning;
 	}
 	&.badge-danger{
-		background-color: #d9534f;
+		background-color: @bsDanger;
 	}
 	&.badge-info{
-		background-color: #5bc0de;
+		background-color: @bsInfo;
 	}
 	&.badge-success{
-		background-color: #5cb85c;
+		background-color: @bsSuccess;
 	}
 	&.badge-primary{
-		background-color: #337ab7;
+		background-color: @bsPrimary;
 	}
+}
+.a-block{
+	display: block;
+}
+.a-block-inline{
+	display: inline-block;
 }
 /*desktop styles*/
 	/*sticky footer*/
@@ -165,6 +178,23 @@ html, body {
 .mce-panel{
 	border-radius: 5px;
 	margin: 0 15px !important;
+}
+//Messages
+.table-hover{
+	tbody{
+		tr{
+			&.bg-success{
+				&:hover{
+					background-color: lighten(@bsBgSuccess, 2%);
+				}
+			}
+			&.bg-danger{
+				&:hover{
+					background-color: lighten(@bsBgDanger, 2%);
+				}
+			}
+		}
+	}
 }
 .loadanimation{
 	display: none;

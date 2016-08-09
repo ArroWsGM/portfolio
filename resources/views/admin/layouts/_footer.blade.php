@@ -103,7 +103,8 @@
 					<h4 class="modal-title" id="property-edit-modal-label">Edit user</h4>
 				</div>
 				<div class="modal-body">
-					<form id="property-edit-form" role="form" method="POST" action="{{ url('/admin/properties/update') }}">
+					<form id="property-edit-form" role="form" method="POST" action="">
+						{{ method_field('PUT') }}
 						<input type="hidden" name="id">
 						<div class="form-group property-name">
 							<input class="form-control" type="text" name="property_name" placeholder="Name">

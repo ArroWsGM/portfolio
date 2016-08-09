@@ -29,7 +29,10 @@ Route::group(['prefix' => 'admin'], function(){
 	//project properties
 	Route::get('properties', 'Admin\PropertyController@index');
 
-	Route::post('properties/edit/{id}', 'Admin\PropertyController@editProperty');
+	Route::get('properties/{id}', [
+			'as' => 'properties.show',
+			'uses' => 'Admin\PropertyController@editProperty',
+		]);
 
 	//Messages
 	Route::get('messages', [
@@ -56,10 +59,21 @@ Route::group(['prefix' => 'admin'], function(){
 			Route::post('gallery/remove/{gallery}', 'Admin\ProjectController@removeGalleryItem');
 			Route::post('property/remove/{property}', 'Admin\ProjectController@removeProjectProperty');
 		});
-		//project properties
-		Route::get('properties/remove/{property}', 'Admin\PropertyController@removeProperty');
-		Route::post('properties/add', 'Admin\PropertyController@addProperty');
-		Route::post('properties/update', 'Admin\PropertyController@updateProperty');
+		Route::group(['prefix' => 'properties'], function() {
+			//project properties
+			Route::delete('{property}', [
+					'as' => 'properties.destroy',
+					'uses' => 'Admin\PropertyController@removeProperty',
+				]);
+			Route::post('add', [
+					'as' => 'properties.add',
+					'uses' => 'Admin\PropertyController@addProperty',
+				]);
+			Route::put('{property}', [
+					'as' => 'properties.update',
+					'uses' => 'Admin\PropertyController@updateProperty',
+				]);
+		});
 		//Messages
 		Route::group(['prefix' => 'messages'], function() {
 			Route::get('{message}', [
@@ -70,7 +84,7 @@ Route::group(['prefix' => 'admin'], function(){
 					'as' => 'messages.destroy',
 					'uses' => 'Admin\MessageController@removeMessage',
 				]);
-			Route::put('updatestatus/{message}', [
+			Route::put('{message}', [
 					'as' => 'messages.updatestatus',
 					'uses' => 'Admin\MessageController@updateStatus',
 				]);

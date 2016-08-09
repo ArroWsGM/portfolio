@@ -35,8 +35,12 @@
 							{{$property->property_group}}
 						</td>
 						<td>
-							<a href="{{url('admin/properties/edit/' . $property->id)}}" class="btn btn-primary btn-edit btn-editproperty" data-token="{{csrf_token()}}">Edit</a>
-							<a href="{{url('admin/properties/remove/' . $property->id)}}" class="btn btn-danger">Delete</a>
+							<a href="{{route('properties.show', $property->id)}}" class="btn btn-primary btn-edit btn-editproperty" data-action="{{route('properties.update', $property->id)}}">Edit</a>
+							<form action="{{route('properties.destroy', $property->id)}}" method="POST" class="a-block-inline delete-form">
+								{{ csrf_field() }}
+								{{ method_field('DELETE') }}
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
 						</td>
 					</tr>
 				@endforeach

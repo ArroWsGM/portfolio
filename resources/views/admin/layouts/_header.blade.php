@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>{{ isset($page_title) ? $page_title . ' :: ' . $cms_about->cms_name . ' v' . $cms_about->cms_version : 'Admin Panel' }}</title>
 	<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 	

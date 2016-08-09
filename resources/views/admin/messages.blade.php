@@ -61,7 +61,7 @@
 							{{$message->created_at}}
 						</td>
 						<td class="message-status">
-							<select class="form-control" id="set-status" data-url="{{route('messages.updatestatus', $message->id)}}">
+							<select class="form-control set-status" data-url="{{route('messages.updatestatus', $message->id)}}">
 								@foreach($statuses as $status)
 								<option value="{{$status->id}}" data-class="{{$status->status_class}}" {{($message->status_id == $status->id) ? 'selected' : ''}}>{{$status->status_name}}</option>
 								@endforeach

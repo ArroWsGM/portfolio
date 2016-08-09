@@ -54,34 +54,6 @@ function getUserAjax(url, token){
 		}
 	});
 }
-//return project property for editing
-function getPropertyAjax(url, token){
-	$.ajax({
-		url:url,
-		headers: {'X-CSRF-TOKEN': token},
-		//data:{_token: token},
-		type:'POST',
-		beforeSend: function(){
-			$('#property-edit-modal .alert').remove();
-		},
-		success: function(json){
-			//var res = JSON.parse(json);
-			//echo(json);
-			//echo(token);
-			$('#property-edit-form input[name=id]').val(json.id);
-			$('#property-edit-form input[name=property_name]').val(json.property_name);
-			$('#property-edit-form input[name=property_class]').val(json.property_class);
-			$('#property-edit-form select[name=property_group]').val(json.property_group);
-			$('#property-edit-modal').modal('show');
-		},
-		error: function(event, jqxhr, settings, thrownError){
-			console.log(event);
-			console.log(jqxhr);
-			console.log(settings);
-			console.log(thrownError);
-		}
-	});
-}
 //update user
 function updateUserAjax(data, token){
 	$.ajax({
@@ -140,13 +112,37 @@ function updateUserAjax(data, token){
 		}
 	});
 }
+//return project property for editing
+function getPropertyAjax(url, action){
+	$.ajax({
+		url:url,
+		type:'GET',
+		beforeSend: function(){
+			$('#property-edit-modal .alert').remove();
+		},
+		success: function(json){
+			//echo(json);
+			$('#property-edit-form').attr('action', action);
+			$('#property-edit-form input[name=id]').val(json.id);
+			$('#property-edit-form input[name=property_name]').val(json.property_name);
+			$('#property-edit-form input[name=property_class]').val(json.property_class);
+			$('#property-edit-form select[name=property_group]').val(json.property_group);
+			$('#property-edit-modal').modal('show');
+		},
+		error: function(event, jqxhr, settings, thrownError){
+			console.log(event);
+			console.log(jqxhr);
+			console.log(settings);
+			console.log(thrownError);
+		}
+	});
+}
 //update project property
-function updatePropertyAjax(data, token){
+function updatePropertyAjax(data){
 	$.ajax({
 		url:data.url,
-		headers: {'X-CSRF-TOKEN': token},
 		data: data,
-		type:'POST',
+		type:'PUT',
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -172,12 +168,12 @@ function updatePropertyAjax(data, token){
 			if(event.status == 422){
 				$.each(event.responseJSON, function(key, value){
 					switch(key){
-						case 'name':
+						case 'property_name':
 							$.each(value, function(){
 								$('#property-edit-form .property-name').addClass('has-error').append('<span class="help-block">' + this + '</span>');
 							});
 							break;
-						case 'email':
+						case 'property_class':
 							$.each(value, function(){
 								$('#property-edit-form .property-class').addClass('has-error').append('<span class="help-block">' + this + '</span>');
 							});
@@ -270,11 +266,10 @@ function deleteProjectPropertyAjax(url, token, property_id, item){
 	});
 }
 //set message status
-function setStatusAjax(data, token){
+function setStatusAjax(data){
 	$.ajax({
-		url:data.url,
-		data: {id: data.id},
-		headers: {'X-CSRF-TOKEN': token},
+		url: data.url,
+		data: {status_id: data.status_id},
 		type:'PUT',
 		beforeSend: function(){
 			$('#alert-holder').empty();
@@ -296,10 +291,9 @@ function setStatusAjax(data, token){
 	});
 }
 //destroy Message
-function destroyMessageAjax(url, token){
+function destroyMessageAjax(url){
 	$.ajax({
 		url:url,
-		headers: {'X-CSRF-TOKEN': token},
 		type:'DELETE',
 		beforeSend: function(){
 			$('#alert-holder').empty();
@@ -328,12 +322,13 @@ $(document).on('click', '.btn-edit', function(e){
 	e=e||window.event;
 	e.preventDefault();
 
-	var url = $(this).attr('href');
-	var token = $(this).data('token');
+	var url = $(this).attr('href'),
+		action = $(this).data('action');
+
 	if($(this).hasClass('btn-editproperty'))
-		getPropertyAjax(url, token);
+		getPropertyAjax(url, action);
 	else
-		getUserAjax(url, token);
+		getUserAjax(url, action);
 });
 //update user pop-up button
 $(document).on('click', '.btn-update-user', function(){
@@ -350,16 +345,24 @@ $(document).on('click', '.btn-update-user', function(){
 });
 //update project properties pop-up button
 $(document).on('click', '.btn-update-property', function(){
-	var token = $(this).data('token'),
-		data = {};
+	var data = {};
 
-	data.url = $('#property-edit-form').attr('action');	
+	data.url = $('#property-edit-form').attr('action');
 	data.id = $('#property-edit-form input[name=id]').val();
 	data.property_name = $('#property-edit-form input[name=property_name]').val();
 	data.property_class = $('#property-edit-form input[name=property_class]').val();
 	data.property_group = $('#property-edit-form select[name=property_group]').val();
 
-	updatePropertyAjax(data, token);
+	updatePropertyAjax(data);
+});
+$(document).on('submit', '.delete-form', function(e){
+	e = e || window.event;
+
+	var a = confirm('Delete property?');
+	if(!a){
+		e.preventDefault();
+		return false;
+	}
 });
 //edit project
 $(document).on('change', '#project-edit-form select[name=item_type]', function(){
@@ -371,11 +374,14 @@ $(window).load(function(){
 });
 //delete projects gallery item
 $(document).on('click', '.gallery-item .btn-delete', function(){
-	var token = $('#project-edit-form input[name=_token]').val(),
-		url = $(this).data('url'),
-		item = $(this).parent('.gallery-item');
+	var a = confirm('Delete property?');
+	if(a){
+		var token = $('#project-edit-form input[name=_token]').val(),
+			url = $(this).data('url'),
+			item = $(this).parent('.gallery-item');
 
-	deleteGalleryItemAjax(url, token, item);
+		deleteGalleryItemAjax(url, token, item);
+	} else return false;
 });
 //add project property
 $(document).on('click', '.property-add', function(){
@@ -418,17 +424,16 @@ $(document).on('click', '.project-properties .property-remove', function(){
 	} else return false;
 });
 //change message status
-$(document).on('change', '#set-status', function(){
-	var token = $('#_token').data('token'),
-		data = {};
+$(document).on('change', '.set-status', function(){
+	var data = {};
 	data.url = $(this).data('url');
 	data.class = $(this).find(':selected').data('class');
-	data.id = $(this).val();
 	data.node = $(this).parents('tr');
+	data.status_id = $(this).val();
 
-	setStatusAjax(data, token);
+	setStatusAjax(data);
 });
-//delete project property
+//delete message
 $(document).on('click', '.btn-delete-message', function(e){
 	e = e || window.event;
 	e.preventDefault();
@@ -436,10 +441,9 @@ $(document).on('click', '.btn-delete-message', function(e){
 	var a = confirm('Delete message?');
 
 	if(a){	
-		var token = $('#_token').data('token'),
-			url = $(this).attr('href');
+		var url = $(this).attr('href');
 
-		destroyMessageAjax(url, token);
+		destroyMessageAjax(url);
 	} else return false;
 });
 /*****************************************
@@ -447,18 +451,23 @@ $(document).on('click', '.btn-delete-message', function(e){
  *	AJAX load & errors
  *
  *****************************************/
-	$(document).on('ajaxStart', function(){
-		$('.loadanimation').show();
-	});
-	$(document).on('ajaxStop', function(){
-		$('.loadanimation').hide();
-	});
-	$(document).ajaxError(function(event, jqxhr, settings, thrownError){
-		console.log(event);
-		console.log(jqxhr.responseText);
-		console.log(settings);
-		console.log(thrownError);
-	});
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$(document).on('ajaxStart', function(){
+	$('.loadanimation').show();
+});
+$(document).on('ajaxStop', function(){
+	$('.loadanimation').hide();
+});
+$(document).ajaxError(function(event, jqxhr, settings, thrownError){
+	console.log(event);
+	console.log(jqxhr.responseText);
+	console.log(settings);
+	console.log(thrownError);
+});
 /*****************************************
  *	document ready function
  *****************************************/

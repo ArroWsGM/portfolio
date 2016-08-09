@@ -68,7 +68,7 @@ class MessageController extends Controller
 
     public function updateStatus(Request $request, Message $message)
     {
-    	if(Message::where('id', $message->id)->update(['status_id' => $request->id]))
+    	if($message->update(['status_id' => $request->status_id]))
     		return ['success' => 'Status changed'];
     	else
     		return ['success' => 'Error when trying to change status'];
