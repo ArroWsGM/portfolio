@@ -29,12 +29,10 @@ function viewport() {
 	return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
 }
 //return user for editing
-function getUserAjax(url, token){
+function getUserAjax(url, action){
 	$.ajax({
 		url:url,
-		headers: {'X-CSRF-TOKEN': token},
-		//data:{_token: token},
-		type:'POST',
+		type:'GET',
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -189,12 +187,36 @@ function updatePropertyAjax(data){
 		}
 	});
 }
-//delete project gallery item
-function deleteGalleryItemAjax(url, token, item){
+//delete project property
+function deleteProjectPropertyAjax(url, property_id, item){
 	$.ajax({
 		url:url,
-		headers: {'X-CSRF-TOKEN': token},
-		type:'POST',
+		type:'DELETE',
+		beforeSend: function(){
+			
+		},
+		success: function(json){
+			if(json.success){
+				var html = '<li class="text-center property-add" data-id="' + item.data('property_id')  + '">' + item.html(); + '</li>';
+				item.remove();
+				$('.all-properties-list').append(html);
+			}
+			else
+				$('#ajax-response').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+json.error+'</div>');
+		},
+		error: function(event, jqxhr, settings, thrownError){
+			console.log(event);
+			console.log(jqxhr);
+			console.log(settings);
+			console.log(thrownError);
+		}
+	});
+}
+//delete project gallery item
+function deleteGalleryItemAjax(url, item){
+	$.ajax({
+		url:url,
+		type:'DELETE',
 		beforeSend: function(){
 			item.find('.item-error').remove();
 		},
@@ -239,32 +261,6 @@ function setGalleryForm(){
 	var val = $('#project-edit-form select[name=item_type]').val();
 	setGalleryFields(val);
 }
-//delete project property
-function deleteProjectPropertyAjax(url, token, property_id, item){
-	$.ajax({
-		url:url,
-		headers: {'X-CSRF-TOKEN': token},
-		type:'POST',
-		beforeSend: function(){
-			
-		},
-		success: function(json){
-			if(json.success){
-				var html = '<li class="text-center property-add" data-id="' + item.data('property_id')  + '">' + item.html(); + '</li>';
-				item.remove();
-				$('.all-properties-list').append(html);
-			}
-			else
-				$('#ajax-response').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+json.error+'</div>');
-		},
-		error: function(event, jqxhr, settings, thrownError){
-			console.log(event);
-			console.log(jqxhr);
-			console.log(settings);
-			console.log(thrownError);
-		}
-	});
-}
 //set message status
 function setStatusAjax(data){
 	$.ajax({
@@ -284,30 +280,6 @@ function setStatusAjax(data){
 		},
 		error: function(event, jqxhr, settings, thrownError){
 			console.log(event);
-			console.log(jqxhr);
-			console.log(settings);
-			console.log(thrownError);
-		}
-	});
-}
-//destroy Message
-function destroyMessageAjax(url){
-	$.ajax({
-		url:url,
-		type:'DELETE',
-		beforeSend: function(){
-			$('#alert-holder').empty();
-		},
-		success: function(json){
-				var className = json.status == 'success' ? 'success' : 'danger';
-				$('#alert-holder').append('<div class="alert alert-' + className + ' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+json.message+'</div>');
-				if(json.status == 'success'){
-					var id = url.split('/').pop();
-					$('.table-messages tr[data-id='+ id +']').remove();
-				}
-		},
-		error: function(event, jqxhr, settings, thrownError){
-			console.log(event.responseText);
 			console.log(jqxhr);
 			console.log(settings);
 			console.log(thrownError);
@@ -364,11 +336,12 @@ $(document).on('submit', '.delete-form', function(e){
 		return false;
 	}
 });
-//edit project
+//edit project change uploads type
 $(document).on('change', '#project-edit-form select[name=item_type]', function(){
 	var val = $(this).val();
 	setGalleryFields(val);
 });
+//set gallery items size
 $(window).load(function(){
 	$('#gallery .gallery-item').height($('#gallery .gallery-item').width()*10/16);
 });
@@ -376,11 +349,10 @@ $(window).load(function(){
 $(document).on('click', '.gallery-item .btn-delete', function(){
 	var a = confirm('Delete property?');
 	if(a){
-		var token = $('#project-edit-form input[name=_token]').val(),
-			url = $(this).data('url'),
+		var url = $(this).data('url'),
 			item = $(this).parent('.gallery-item');
 
-		deleteGalleryItemAjax(url, token, item);
+		deleteGalleryItemAjax(url, item);
 	} else return false;
 });
 //add project property
@@ -415,12 +387,11 @@ $(document).on('click', '.property-add', function(){
 $(document).on('click', '.project-properties .property-remove', function(){
 	var a = confirm('Delete property?');
 	if(a){	
-		var token = $('#project-edit-form input[name=_token]').val(),
-			url = $(this).data('url'),
+		var url = $(this).data('url'),
 			property_id = $(this).data('property_id'),
 			item = $(this);
 
-		deleteProjectPropertyAjax(url, token, property_id, item);
+		deleteProjectPropertyAjax(url, property_id, item);
 	} else return false;
 });
 //change message status
@@ -432,19 +403,6 @@ $(document).on('change', '.set-status', function(){
 	data.status_id = $(this).val();
 
 	setStatusAjax(data);
-});
-//delete message
-$(document).on('click', '.btn-delete-message', function(e){
-	e = e || window.event;
-	e.preventDefault();
-
-	var a = confirm('Delete message?');
-
-	if(a){	
-		var url = $(this).attr('href');
-
-		destroyMessageAjax(url);
-	} else return false;
 });
 /*****************************************
  *

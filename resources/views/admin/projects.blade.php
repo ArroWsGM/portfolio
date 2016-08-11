@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
-			<a href="{{url('/admin/projects/add/')}}" class="btn btn-info">
+			<a href="{{route('projects.create')}}" class="btn btn-info">
 				Add New Project
 			</a>
 		</div>
@@ -108,8 +108,12 @@
 							{{$project->updated_at}}
 						</td>
 						<td>
-							<a href="{{url('admin/projects/edit/' . $project->id)}}" class="btn btn-primary">Edit</a>
-							<a href="{{url('admin/projects/remove/' . $project->id)}}" class="btn btn-danger">Delete</a>
+							<a href="{{route('projects.edit', $project->id)}}" class="btn btn-primary">Edit</a>
+							<form action="{{route('projects.destroy', $project->id)}}" method="POST" class="a-block-inline">
+								{{csrf_field()}}
+								{{method_field('DELETE')}}
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
 						</td>
 					</tr>
 				@endforeach
@@ -119,7 +123,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
-			<a href="{{url('/admin/projects/add')}}" class="btn btn-info">
+			<a href="{{route('projects.create')}}" class="btn btn-info">
 				Add New Project
 			</a>
 		</div>

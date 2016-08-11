@@ -52,7 +52,7 @@ class ProjectController extends Controller
     	return view('admin.projects', compact('page_title', 'projects', 'request'));
     }
 //Add project
-    public function add()
+    public function create()
     {
 		$page_title = 'New project';
 		$all_properties = Property::all();
@@ -101,7 +101,7 @@ class ProjectController extends Controller
 		return $validator;
     }
 //Create new project
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $project_slug = (isset($request->project_slug) && !empty($request->project_slug)) ? $request->project_slug : str_slug($request->project_name, '-');
 
@@ -110,14 +110,16 @@ class ProjectController extends Controller
     	$validator = $this->validator($request);
     	//if validation fails
         if ($validator->fails()) {
-        	return redirect('/admin/projects/add')
+        	return redirect()
+        				->back()
                         ->withErrors($validator)
                         ->withInput();
         }
-
+        
+    	$upload_dir = $this->getUploadDir();
 
         if ($request->item_url != '' && $request->file('item_url')->isValid()) {
-        	$destination = base_path('public/upload/' . $project_slug) . '/';
+        	$destination = base_path($upload_dir . $project_slug) . '/';
 			
 			if ($request->item_type == 'img')
 				$name = 'image_' . time() . '_' . str_random(8);
@@ -167,7 +169,7 @@ class ProjectController extends Controller
 			}
 		}
 
-    	return redirect('/admin/projects/edit/' . $project->id);
+    	return redirect()->route('projects.edit', $project->id);
     }
 //update project
     public function update(Request $request, Project $project)
@@ -176,14 +178,16 @@ class ProjectController extends Controller
     	//if validation fails
         if ($validator->fails()) {
         	return back()
-                        ->withErrors($validator)
-                        ->withInput();
+                     ->withErrors($validator)
+                     ->withInput();
         }
+
+    	$upload_dir = $this->getUploadDir();
 
         $project_slug = $project->project_slug;
 
         if ($request->item_url != '' && $request->file('item_url')->isValid()) {
-        	$destination = base_path('public/upload/' . $project_slug) . '/';
+        	$destination = base_path($upload_dir . $project_slug) . '/';
 			
 			if ($request->item_type == 'img')
 				$name = 'image_' . time() . '_' . str_random(8);
@@ -204,7 +208,9 @@ class ProjectController extends Controller
 		//dd($res);
 
         if($project_slug != $request->project_slug){
-        	rename(base_path('public/upload/' . $project_slug), base_path('public/upload/' . $request->project_slug));
+        	if (file_exists(base_path($upload_dir . $project_slug))){
+        		rename(base_path($upload_dir . $project_slug), base_path($upload_dir . $request->project_slug));
+        	}
         	$project_slug = $request->project_slug;
         }
 
@@ -238,13 +244,29 @@ class ProjectController extends Controller
 			}
 		}
 
-    	return redirect('/admin/projects/edit/' . $project->id);
+    	return redirect()->route('projects.edit', $project->id);
     }
+//destroy project
+    public function destroy(Project $project)
+    {
+    	$upload_dir = $this->getUploadDir();
+    	$path = base_path($upload_dir . $project->project_slug) .'/';
+    	File::deleteDirectory($path);
 
-    public function removeGalleryItem(Gallery $gallery)
+    	if($project->destroy($project->id)){
+    		session()->flash('msg_success', 'Project named "' . $project->project_name . '" was removed');
+    		return back();
+    	} else {
+    		session()->flash('msg_error', 'An error occured when deleting project named "' . $project->project_name);
+    		return back();
+    	}
+    }
+//destroy gallery item
+    public function destroyGalleryItem(Gallery $gallery)
     {
     	if($gallery->item_type != 'video_embed'){
-    		$path = base_path('public/upload/' . $gallery->project->project_slug) .'/';
+    		$upload_dir = $this->getUploadDir();
+    		$path = base_path($upload_dir . $gallery->project->project_slug) .'/';
     		$name = explode('/', $gallery->item_url);
     		$name = end($name);
     		if($gallery->item_type == 'img'){
@@ -263,26 +285,17 @@ class ProjectController extends Controller
     	else
     		return ['success' => false];
     }
-
-    public function removeProjectProperty(ProjectProperty $property)
+//destroy project property
+    public function destroyProjectProperty(ProjectProperty $property)
     {
     	if($property->destroy($property->id))
     		return ['success' => true];
     	else
     		return ['success' => false];
     }
-
-    public function removeProject(Project $project)
-    {
-    	$path = base_path('public/upload/' . $project->project_slug) .'/';
-    	File::deleteDirectory($path);
-
-    	if($project->destroy($project->id)){
-    		session()->flash('msg_success', 'Project named "' . $project->project_name . '" was removed');
-    		return back();
-    	} else {
-    		session()->flash('msg_error', 'An error occured when deleting project named "' . $project->project_name);
-    		return back();
-    	}
+//get upload directory
+    private function getUploadDir(){
+		$all_settings = Setting::getAllSettings();
+		return isset($all_settings['upload_dir']) ? $all_settings['upload_dir'] : 'public/upload/';
     }
 }

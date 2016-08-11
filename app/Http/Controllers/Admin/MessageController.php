@@ -62,8 +62,17 @@ class MessageController extends Controller
 
     public function removeMessage(Message $message)
     {
-        if(Message::destroy($message->id))
-            return response()->json(['status' => 'success', 'message' => 'Message successfully deleted.']);
+        if(Message::destroy($message->id)){
+            //return response()->json(['status' => 'success', 'message' => 'Message successfully deleted.']);
+            Session::flash('msg_success', 'Message was deleted.');
+            if(Session::has('back_to')){
+                return redirect(Session::get('back_to'));
+            } else {
+                return back();
+            }
+        } else {
+            return back()->with('msg_error', 'Error occured when deleting message.');
+        }
     }
 
     public function updateStatus(Request $request, Message $message)

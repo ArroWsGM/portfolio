@@ -5,7 +5,7 @@
 	@unless(empty($pid))
 	<div class="row">
 		<div class="col-sm-12 text-right">
-			<a href="{{url('/admin/projects/add/')}}" class="btn btn-info">
+			<a href="{{route('projects.create')}}" class="btn btn-info">
 				Add New Project
 			</a>
 		</div>
@@ -16,8 +16,11 @@
 			<h2>{{ $page_title or 'Project'}}</h2>
 		</div>
 	</div>
-	<form id="project-edit-form" class="form form-horizontal" action="{{url('/admin/projects/update/' . $pid )}}" method="POST" enctype="multipart/form-data">
+	<form id="project-edit-form" class="form form-horizontal" action="{{ $pid ? route('projects.update', $pid) : route('projects.store') }}" method="POST" enctype="multipart/form-data">
 		{{csrf_field()}}
+		@if($pid)
+		{{method_field('PUT')}}
+		@endif
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="form-group{{$errors->has('project_name') ? ' has-error' : ''}}">
@@ -99,7 +102,7 @@
 				<h4>Devices</h4>
 				<ul class="list-inline properties-list deletable">
 					@forelse($project->properties->where('property.property_group', 'device') as $property)
-					<li class="text-center property-remove" data-url="{{url('/admin/projects/property/remove/' . $property->id)}}" data-property_id="{{$property->property->id}}">
+					<li class="text-center property-remove" data-url="{{route('projects.property.destroy', $property->id)}}" data-property_id="{{$property->property->id}}">
 						<p><span class="{{$property->property->property_class}}"></span></p>
 						<p>{{$property->property->property_name}}</p>
 					</li>
@@ -112,7 +115,7 @@
 				<h4>Browser</h4>
 				<ul class="list-inline properties-list deletable">
 					@forelse($project->properties->where('property.property_group', 'browser') as $property)
-					<li class="text-center property-remove" data-url="{{url('/admin/projects/property/remove/' . $property->id)}}" data-property_id="{{$property->property->id}}">
+					<li class="text-center property-remove" data-url="{{route('projects.property.destroy', $property->id)}}" data-property_id="{{$property->property->id}}">
 						<p><span class="{{$property->property->property_class}}"></span></p>
 						<p>{{$property->property->property_name}}</p>
 					</li>
@@ -125,7 +128,7 @@
 				<h4>Tech</h4>
 				<ul class="list-inline properties-list deletable">
 					@forelse($project->properties->where('property.property_group', 'technology') as $property)
-					<li class="text-center property-remove" data-url="{{url('/admin/projects/property/remove/' . $property->id)}}" data-property_id="{{$property->property->id}}">
+					<li class="text-center property-remove" data-url="{{route('projects.property.destroy', $property->id)}}" data-property_id="{{$property->property->id}}">
 						<p><span class="{{$property->property->property_class}}"></span></p>
 						<p>{{$property->property->property_name}}</p>
 					</li>
@@ -197,7 +200,7 @@
 						</video>
 					</div>
 					@endif
-					<button type="button" class="btn btn-danger btn-delete" data-url="{{url('/admin/projects/gallery/remove/' . $item->id)}}"><span aria-hidden="true">&times;</span></button>
+					<button type="button" class="btn btn-danger btn-delete" data-url="{{route('projects.gallery.destroy', $item->id)}}"><span aria-hidden="true">&times;</span></button>
 				</div>
 				@endif
 			@endforeach

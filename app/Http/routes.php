@@ -23,8 +23,14 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('users', 'Admin\AdminController@users');
 
 	//projects
-	Route::get('projects', 'Admin\ProjectController@index');
-	Route::get('projects/edit/{project}', 'Admin\ProjectController@edit');
+	Route::get('projects', [
+			'as' => 'projects.index',
+			'uses' => 'Admin\ProjectController@index',
+		]);
+	Route::get('projects/{project}/edit', [
+			'as' => 'projects.edit',
+			'uses' => 'Admin\ProjectController@edit',
+		]);
 
 	//project properties
 	Route::get('properties', 'Admin\PropertyController@index');
@@ -52,12 +58,30 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::post('users/edit/{id}', 'Admin\AdminController@editUser');
 		//projects
 		Route::group(['prefix' => 'projects'], function() {
-			Route::get('add', 'Admin\ProjectController@add');
-			Route::get('remove/{project}', 'Admin\ProjectController@removeProject');
-			Route::post('update', 'Admin\ProjectController@create');
-			Route::post('update/{project}', 'Admin\ProjectController@update');
-			Route::post('gallery/remove/{gallery}', 'Admin\ProjectController@removeGalleryItem');
-			Route::post('property/remove/{property}', 'Admin\ProjectController@removeProjectProperty');
+			Route::get('create', [
+					'as' => 'projects.create',
+					'uses' => 'Admin\ProjectController@create',
+				]);
+			Route::post('', [
+					'as' => 'projects.store',
+					'uses' => 'Admin\ProjectController@store',
+				]);
+			Route::put('{project}', [
+					'as' => 'projects.update',
+					'uses' => 'Admin\ProjectController@update',
+				]);
+			Route::delete('{project}', [
+					'as' => 'projects.destroy',
+					'uses' => 'Admin\ProjectController@destroy'
+				]);
+			Route::delete('gallery/{gallery}', [
+					'as' => 'projects.gallery.destroy',
+					'uses' => 'Admin\ProjectController@destroyGalleryItem'
+				]);
+			Route::delete('property/{property}', [
+					'as' => 'projects.property.destroy',
+					'uses' => 'Admin\ProjectController@destroyProjectProperty'
+				]);
 		});
 		Route::group(['prefix' => 'properties'], function() {
 			//project properties

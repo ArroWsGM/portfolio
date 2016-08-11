@@ -7,8 +7,12 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-12 text-center">
-			<h2>Messages</h2>
+		<div class="col-sm-10 col-sm-offset-1 text-center">
+			<h2>Messages
+				@if($messages->count())
+				&nbsp;<span class="badge badge-info">{{($messages->currentPage() * $messages->perPage()) - $messages->perPage() + 1}}-{{($messages->currentPage() * $messages->perPage()) - $messages->perPage() + $messages->count()}} of {{$messages->total()}}</span>
+				@endif
+				</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -82,7 +86,11 @@
 							@endif
 							@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
 							<a href="{{route('messages.show', $message->id)}}" class="btn btn-primary">View</a>
-							<a href="{{route('messages.destroy', $message->id)}}" class="btn btn-danger btn-delete-message">Delete</a>
+							<form action="{{route('messages.destroy', $message->id)}}" method="POST" class="delete-form">
+								{{ csrf_field() }}
+								{{ method_field('DELETE') }}
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
 							@else
 							<a href="#" class="btn btn-primary">View</a>
 							<a href="#" class="btn btn-danger">Delete</a>

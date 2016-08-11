@@ -43,16 +43,21 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<a href="{{Session::has('back_to') ? Session::get('back_to') : URL::previous()}}" class="btn btn-default pull-left"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+					<form action="{{route('messages.destroy', $message->id)}}" method="POST" class="delete-form pull-right">
+						{{ csrf_field() }}
+						{{ method_field('DELETE') }}
+						<button type="submit" class="btn btn-danger">Delete Message</button>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-5">
 			<p class="well well-sm"><span class="label label-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> {{$message->subject}}</p>
 			<h4>Message</h4>
 			<p class="well well-sm">{!!nl2br($message->message)!!}</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
-			<a href="{{Session::has('back_to') ? Session::get('back_to') : URL::previous()}}" class="btn btn-default pull-left"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
 	</div>
 @stop
