@@ -8,7 +8,7 @@
 		<div class="carousel-wrapper">
 			@forelse($projects as $project)
 			<?php
-				$path = isset($all_settings['upload_directory']) ? $all_settings['upload_directory'] : 'upload/';
+				$path = isset($all_settings['upload_dir']) ? $all_settings['upload_dir'] : 'upload/';
 				$path .= $project->project_slug . '/';
 				$url = $project->galleries->count() ? $path . $project->galleries->first()['item_url'] : false;
 

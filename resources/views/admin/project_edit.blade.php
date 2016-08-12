@@ -185,7 +185,7 @@
 			@foreach($project->galleries as $item)
 				@if(!empty($item->item_url) || !empty($item->item_embed))
 				<div class="col-sm-3 gallery-item">
-					@eval($path = isset($all_settings['upload_directory']) ? $all_settings['upload_directory'] : 'upload/')
+					@eval($path = isset($all_settings['upload_dir']) ? $all_settings['upload_dir'] : 'upload/')
 					@eval($path .= $project->project_slug . '/')
 					@if($item->item_type == 'img' && !empty($item->item_url))
 					<img src="{{url($path.getImageSizeName($item->item_url, 'small'))}}" alt="" class="img-responsive">

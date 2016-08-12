@@ -73,7 +73,7 @@
 					<h4 class="modal-title" id="user-edit-modal-label">Edit user</h4>
 				</div>
 				<div class="modal-body">
-					<form id="user-edit-form" role="form" method="POST" action="{{ url('/admin/users/update') }}">
+					<form id="user-edit-form" role="form" action="">
 						<input type="hidden" name="id">
 						<div class="form-group user-name">
 							<input class="form-control" type="text" name="name" placeholder="Name">

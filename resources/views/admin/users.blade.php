@@ -43,8 +43,12 @@
 						</td>
 						<td>
 							@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
-							<a href="{{url('admin/users/edit/' . $user->id)}}" class="btn btn-primary btn-edit" data-token="{{csrf_token()}}">Edit</a>
-							<a href="{{url('admin/users/remove/' . $user->id)}}" class="btn btn-danger">Delete</a>
+							<a href="{{route('users.edit', $user->id)}}" class="btn btn-primary btn-edit" data-action="{{route('users.update', $user->id)}}">Edit</a>
+							<form action="{{route('users.destroy', $user->id)}}" method="POST" class="a-block-inline delete-form">
+								{{ csrf_field() }}
+								{{ method_field('DELETE') }}
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
 							@else
 							<a href="#" class="btn btn-primary">Edit</a>
 							<a href="#" class="btn btn-danger">Delete</a>
@@ -65,7 +69,7 @@
 	</div>
 	<div class="row collapse{{empty($errors->all()) ? '' : ' in'}}" id="adduser-collapse" aria-expanded="{{empty($errors->all()) ? 'false' : 'true'}}">
 		<div class="col-sm-6 col-sm-offset-3">
-			<form role="form" method="POST" action="{{ url('/admin/users/add') }}">
+			<form role="form" method="POST" action="{{ route('users.store') }}">
 				{{csrf_field()}}
 				<table class="table table-hover">
 					<thead>

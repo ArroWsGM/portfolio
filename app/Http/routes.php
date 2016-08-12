@@ -20,7 +20,10 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('settings', 'Admin\AdminController@settings');
 
 	//Users
-	Route::get('users', 'Admin\AdminController@users');
+	Route::get('users', [
+		'as' => 'users.index',
+		'uses' => 'Admin\AdminController@userIndex',
+		]);
 
 	//projects
 	Route::get('projects', [
@@ -33,7 +36,10 @@ Route::group(['prefix' => 'admin'], function(){
 		]);
 
 	//project properties
-	Route::get('properties', 'Admin\PropertyController@index');
+	Route::get('properties', [
+			'as' => 'properties.index',
+			'uses' => 'Admin\PropertyController@index',
+		]);
 
 	Route::get('properties/{id}', [
 			'as' => 'properties.show',
@@ -52,10 +58,24 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::post('settings', 'Admin\AdminController@upadateSettings');
 		Route::post('settings/add', 'Admin\AdminController@addSettings');
 		//Users
-		Route::get('users/remove/{user}', 'Admin\AdminController@removeUsers');
-		Route::post('users/add', 'Admin\AdminController@addUsers');
-		Route::post('users/update', 'Admin\AdminController@updateUser');
-		Route::post('users/edit/{id}', 'Admin\AdminController@editUser');
+		Route::group(['prefix' => 'users'], function() {
+			Route::delete('{user}', [
+					'as' => 'users.destroy',
+					'uses' => 'Admin\AdminController@userDestroy'
+				]);
+			Route::post('', [
+				'as' => 'users.store',
+				'uses' => 'Admin\AdminController@userStore',
+				]);
+			Route::get('{user}/edit', [
+					'as' => 'users.edit',
+					'uses' => 'Admin\AdminController@userEdit',
+				]);
+			Route::put('{user}', [
+					'as' => 'users.update',
+					'uses' => 'Admin\AdminController@userUpdate'
+				]);
+		});
 		//projects
 		Route::group(['prefix' => 'projects'], function() {
 			Route::get('create', [

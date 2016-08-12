@@ -36,9 +36,7 @@ function getUserAjax(url, action){
 		beforeSend: function(){
 		},
 		success: function(json){
-			//var res = JSON.parse(json);
-			//echo(json);
-			//echo(token);
+			$('#user-edit-form').attr('action', action);
 			$('#user-edit-form input[name=id]').val(json.id);
 			$('#user-edit-form input[name=name]').val(json.name);
 			$('#user-edit-form input[name=email]').val(json.email);
@@ -53,12 +51,11 @@ function getUserAjax(url, action){
 	});
 }
 //update user
-function updateUserAjax(data, token){
+function updateUserAjax(data){
 	$.ajax({
 		url:data.url,
-		headers: {'X-CSRF-TOKEN': token},
 		data: data,
-		type:'POST',
+		type:'PUT',
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -304,8 +301,7 @@ $(document).on('click', '.btn-edit', function(e){
 });
 //update user pop-up button
 $(document).on('click', '.btn-update-user', function(){
-	var token = $(this).data('token'),
-		data = {};
+	var data = {};
 
 	data.url = $('#user-edit-form').attr('action');	
 	data.id = $('#user-edit-form input[name=id]').val();
@@ -313,7 +309,7 @@ $(document).on('click', '.btn-update-user', function(){
 	data.email = $('#user-edit-form input[name=email]').val();
 	data.password = $('#user-edit-form input[name=password]').val();
 
-	updateUserAjax(data, token);
+	updateUserAjax(data);
 });
 //update project properties pop-up button
 $(document).on('click', '.btn-update-property', function(){
@@ -330,7 +326,7 @@ $(document).on('click', '.btn-update-property', function(){
 $(document).on('submit', '.delete-form', function(e){
 	e = e || window.event;
 
-	var a = confirm('Delete property?');
+	var a = confirm('Delete?');
 	if(!a){
 		e.preventDefault();
 		return false;

@@ -11,7 +11,7 @@
 	<div class="row project-description">
 		<div id="gallery" class="col-xs-12 col-sm-6 col-md-6 col-lg-offset-2 col-lg-4">
 			@eval($galleries = $project->galleries->where('item_type', 'img'))
-			@eval($path = isset($all_settings['upload_directory']) ? $all_settings['upload_directory'] : 'upload/')
+			@eval($path = isset($all_settings['upload_dir']) ? $all_settings['upload_dir'] : 'upload/')
 			@eval($path .= $project->project_slug . '/')
 			@forelse($galleries as $index => $gallery)
 			<img class="img-responsive img-responsive-100 margin-fix{{ ($index == 0) ? ' active' : ''}}" src="{{url($path . getImageSizeName($gallery['item_url'], 'medium'))}}" alt="{{$gallery['item_alt']}}" data-target="{{url($path . $gallery['item_url'])}}">

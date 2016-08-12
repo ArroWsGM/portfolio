@@ -16,9 +16,9 @@
 			@if (Auth::check())
 			<ul class="nav navbar-nav">
 				<li{!! Request::is('admin/projects*') ? ' class="active"' : '' !!}><a href="{{route('projects.index')}}">Projects</a></li>
-				<li{!! Request::is('admin/properties*') ? ' class="active"' : '' !!}><a href="{{url('/admin/properties')}}">Properties</a></li>
+				<li{!! Request::is('admin/properties*') ? ' class="active"' : '' !!}><a href="{{route('properties.index')}}">Properties</a></li>
 				<li{!! Request::is('admin/messages*') ? ' class="active"' : '' !!}><a href="{{route('messages.index')}}">Messages&nbsp;<span class="badge badge-warning">{{ $messages_new ? $messages_new : '' }}</span></a></li>
-				<li{!! Request::is('admin/users*') ? ' class="active"' : '' !!}><a href="{{url('/admin/users')}}">Users</a></li>
+				<li{!! Request::is('admin/users*') ? ' class="active"' : '' !!}><a href="{{route('users.index')}}">Users</a></li>
 				@if(Auth::user() && Auth::user()->email != 'demo@demo.demo')
 				<li{!! Request::is('admin/settings*') ? ' class="active"' : '' !!}><a href="{{url('/admin/settings')}}">Settings</a></li>
 				@endif

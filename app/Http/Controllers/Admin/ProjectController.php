@@ -7,6 +7,7 @@ use File;
 use Image;
 use Validator;
 use DB;
+use Purifier;
 
 use App\Admin\Gallery;
 use App\Admin\Project;
@@ -119,7 +120,7 @@ class ProjectController extends Controller
     	$upload_dir = $this->getUploadDir();
 
         if ($request->item_url != '' && $request->file('item_url')->isValid()) {
-        	$destination = base_path($upload_dir . $project_slug) . '/';
+        	$destination = public_path($upload_dir . $project_slug) . '/';
 			
 			if ($request->item_type == 'img')
 				$name = 'image_' . time() . '_' . str_random(8);
@@ -144,7 +145,7 @@ class ProjectController extends Controller
 				'project_name' => $request->project_name,
 				'project_slug' => $project_slug,
 				'project_link' => $request->project_link,
-				'project_description' => $request->project_description,
+				'project_description' => Purifier::clean($request->project_description),
 			]);
 
 		if(isset($item_url) || !empty($request->item_embed)){
@@ -187,7 +188,7 @@ class ProjectController extends Controller
         $project_slug = $project->project_slug;
 
         if ($request->item_url != '' && $request->file('item_url')->isValid()) {
-        	$destination = base_path($upload_dir . $project_slug) . '/';
+        	$destination = public_path($upload_dir . $project_slug) . '/';
 			
 			if ($request->item_type == 'img')
 				$name = 'image_' . time() . '_' . str_random(8);
@@ -208,8 +209,8 @@ class ProjectController extends Controller
 		//dd($res);
 
         if($project_slug != $request->project_slug){
-        	if (file_exists(base_path($upload_dir . $project_slug))){
-        		rename(base_path($upload_dir . $project_slug), base_path($upload_dir . $request->project_slug));
+        	if (file_exists(public_path($upload_dir . $project_slug))){
+        		rename(public_path($upload_dir . $project_slug), public_path($upload_dir . $request->project_slug));
         	}
         	$project_slug = $request->project_slug;
         }
@@ -218,7 +219,7 @@ class ProjectController extends Controller
 				'project_name' => $request->project_name,
 				'project_link' => $request->project_link,
 				'project_slug' => $project_slug,
-				'project_description' => $request->project_description,
+				'project_description' => Purifier::clean($request->project_description),
 				'updated_at' => new \DateTime('NOW'),
 			]);
 
@@ -250,7 +251,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
     	$upload_dir = $this->getUploadDir();
-    	$path = base_path($upload_dir . $project->project_slug) .'/';
+    	$path = public_path($upload_dir . $project->project_slug) .'/';
     	File::deleteDirectory($path);
 
     	if($project->destroy($project->id)){
@@ -266,7 +267,7 @@ class ProjectController extends Controller
     {
     	if($gallery->item_type != 'video_embed'){
     		$upload_dir = $this->getUploadDir();
-    		$path = base_path($upload_dir . $gallery->project->project_slug) .'/';
+    		$path = public_path($upload_dir . $gallery->project->project_slug) .'/';
     		$name = explode('/', $gallery->item_url);
     		$name = end($name);
     		if($gallery->item_type == 'img'){
