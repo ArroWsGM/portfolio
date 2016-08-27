@@ -162,11 +162,15 @@ Route::get('/', [
 		'as' => 'front.index',
 		'uses' => 'HomeController@index',
 	]);
-Route::get('/get/{project}', [
+Route::post('setlocale', [
+		'as' => 'front.setLocale',
+		'uses' => 'HomeController@setLocale',
+	]);
+Route::get('get/{project}', [
 		'as' => 'front.project',
 		'uses' => 'HomeController@getProject',
 	]);
-Route::post('/sendmessage', [
+Route::post('sendmessage', [
 		'as' => 'front.message',
 		'uses' => 'HomeController@addMessage',
 	]);

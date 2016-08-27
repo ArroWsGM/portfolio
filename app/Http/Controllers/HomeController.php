@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use View;
+use App;
 use Mail;
+use Session;
+use View;
 
 use App\Project;
 use App\Message;
@@ -15,10 +17,21 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $locale;
+
+    public function __construct(Request $request){
+        $locale = Session::has('locale') ? Session::get('locale') : setLocaleByIP($request->ip());
+        App::setLocale($locale);
+        $this->locale = $locale;
+    }
+
     public function index()
     {
         $all_settings = Setting::getAllSettings();
-        $page_title = 'Portfolio';
+        $page_title = trans('app.portfolio');
+
+        $locale = $this->locale;
+
         $projects = Project::with([
                                     'galleries' => function($query){
                                                             $query->where('item_type', 'img');
@@ -27,7 +40,20 @@ class HomeController extends Controller
                     ->orderBy('updated_at', 'desc')
                     ->take(isset($all_settings['front_carouselitems']) ? $all_settings['front_carouselitems'] : 10)
                     ->get();
-        return view('front.home', compact('page_title', 'projects'));
+
+        return view('front.home', compact('page_title', 'projects', 'locale'));
+    }
+//Set Locale
+    public function setLocale(Request $request)
+    {
+        $locale = $request->locale;
+
+        if(!in_array($locale, ['uk', 'en']))
+            $locale = 'en';
+        
+        Session::put('locale', $locale);
+
+        return back();
     }
 //Load project
     public function getProject(Request $request, Project $project)
@@ -42,7 +68,7 @@ class HomeController extends Controller
             event(new ProjectWasViewed($project->id, $request->ip()));
             return ['success' => View::make('front.project', compact('project'))->render()];
         } else {
-            return ['error' => 'No projects found'];
+            return ['error' => trans('notfound')];
         }
     }
 //add message
@@ -59,7 +85,7 @@ class HomeController extends Controller
         $blacklisted = \DB::table('blacklist_ip')->where('ip', $request->ip())->count();
 
         if($blacklisted > 0)
-            return ['error' => 'Your IP is in blacklist, sorry'];
+            return ['error' => trans('app.blacklist')];
 
         $msg = [
             'status_id' => 1,
@@ -85,11 +111,11 @@ class HomeController extends Controller
 
         if(Message::create($msg))
         {
-            return ['success' => 'Message sended'];
+            return ['success' => trans('app.msgsend')];
         }
         else
         {
-            return ['error' => 'There is an error occured while sending you message'];
+            return ['error' => trans('app.msgerror')];
         }
     }
 }

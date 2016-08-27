@@ -36,7 +36,7 @@
 			@eval($browsers = $project->properties->where('property.property_group', 'browser'))
 			@if($browsers->count())
 			<div class="project-description-item">
-				<p>Browser support:&nbsp;
+				<p>@lang('app.browsers'):&nbsp;
 					@foreach($browsers as $browser)
 					<span class="{{$browser->property->property_class}}" data-toggle="tooltip" data-placement="top" title="{{$browser->property->property_name}}"></span>&nbsp;
 					@endforeach
@@ -68,10 +68,10 @@
 			@if($project->project_description)
 			<div class="project-description-item">
 				<p>
-					Description
+					@lang('app.description'):
 				</p>
 				<p class="small">
-					<small>{!!nl2br($project->project_description)!!}</small>
+					<small>{!! $project->project_description !!}</small>
 				</p>
 			</div>
 			@endif

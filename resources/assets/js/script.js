@@ -326,6 +326,22 @@ function sendMessageAjax(data, token){
 /*****************************************
  *	Event listeners
  *****************************************/
+//
+$(document).on('click', '#setlocale a', function(e){
+	e = e||window.event;
+	e.preventDefault();
+	
+	var locale = $(this).data('locale'),
+		input = $('#setlocale input[name=locale]')
+		form = $('#setlocale');
+
+	if(locale == input.val())
+		return false;
+
+	input.val(locale);
+	form.submit();
+});
+//Contact me form submit
 $(document).on('submit', '#message-form', function(e){
 	e = e||window.event;
 	e.preventDefault();

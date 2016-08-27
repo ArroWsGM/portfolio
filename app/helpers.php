@@ -52,3 +52,24 @@ function getNumbers($str)
 
 	return implode('', $matches[0]);
 }
+
+function setLocaleByIP($ip)
+{
+	$url = "http://ipinfo.io/$ip/country";
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_URL => $url,
+    ));
+    $response = trim(curl_exec($curl));
+    curl_close($curl);
+
+    if(in_array($response, ['UA', 'BY', 'KZ', 'MD', 'RU'])){
+		\Session::put('locale', 'uk');
+		return 'uk';
+    } else {
+		\Session::put('locale', 'en');
+		return 'en';
+	}
+}

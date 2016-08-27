@@ -69,7 +69,7 @@
 	<div class="container popup-child">
 		<header>
 			<div class="row">
-				<h3 class="col-xs-12 col-sm-6 col-sm-offset-3 main-title text-center">Leave a message</h3>
+				<h3 class="col-xs-12 col-sm-6 col-sm-offset-3 main-title text-center">@lang('app.leavemessage')</h3>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
@@ -81,9 +81,9 @@
 			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 				<form id="message-form" class="form-horizontal form-black" method="POST" action="{{route('front.message')}}">
 					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">Name</label>
+						<label for="name" class="col-sm-2 control-label">@lang('app.name')</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+							<input type="text" class="form-control" id="name" name="name" placeholder="@lang('app.name')">
 						</div>
 					</div>
 					<div class="form-group">
@@ -93,21 +93,21 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="subject" class="col-sm-2 control-label">Subject</label>
+						<label for="subject" class="col-sm-2 control-label">@lang('app.subject')</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+							<input type="text" class="form-control" id="subject" name="subject" placeholder="@lang('app.subject')">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="phone" class="col-sm-2 control-label">Phone</label>
+						<label for="phone" class="col-sm-2 control-label">@lang('app.phone')</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="phone" name="phone" placeholder="+380(xx)xxx-xx-xx">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="message" class="col-sm-12">Message</label>
+						<label for="message" class="col-sm-12">@lang('app.message')</label>
 						<div class="col-sm-12">
-							<textarea class="form-control" rows="5" id="message" name="message" placeholder="Message"></textarea>
+							<textarea class="form-control" rows="5" id="message" name="message" placeholder="@lang('app.message')"></textarea>
 						</div>
 					</div>
 					<div class="row mtop-15">
@@ -115,7 +115,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-xs-12 text-center">
-							<button type="submit" class="btn btn-transparent">Send</button>
+							<button type="submit" class="btn btn-transparent">@lang('app.send')</button>
 						</div>
 					</div>
 				</form>
