@@ -16,9 +16,6 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('index', 'Admin\AdminController@index');
 	Route::get('about', 'Admin\AdminController@about');
 
-	//Settings
-	Route::get('settings', 'Admin\AdminController@settings');
-
 	//Users
 	Route::get('users', [
 		'as' => 'users.index',
@@ -54,9 +51,24 @@ Route::group(['prefix' => 'admin'], function(){
 
 	Route::group(['middleware' => 'demouser'], function () {
 		//Settings
-		Route::get('settings/remove/{setting}', 'Admin\AdminController@removeSettings');
-		Route::post('settings', 'Admin\AdminController@upadateSettings');
-		Route::post('settings/add', 'Admin\AdminController@addSettings');
+		Route::group(['prefix' => 'settings'], function() {
+			Route::get('', [
+					'as' => 'settings.settings',
+					'uses' => 'Admin\AdminController@settingIndex',
+				]);
+			Route::post('', [
+					'as' => 'settings.store',
+					'uses' => 'Admin\AdminController@settingStore',
+				]);
+			Route::put('', [
+					'as' => 'settings.update',
+					'uses' => 'Admin\AdminController@settingUpdate',
+				]);
+			Route::delete('{setting}', [
+					'as' => 'settings.destroy',
+					'uses' => 'Admin\AdminController@settingDestroy',
+				]);
+		});
 		//Users
 		Route::group(['prefix' => 'users'], function() {
 			Route::delete('{user}', [

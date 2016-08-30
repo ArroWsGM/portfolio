@@ -29,6 +29,27 @@ function viewport() {
 	return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
 }
 //return user for editing
+function deleteSettingAjax(url, setting_id){
+	$.ajax({
+		url: url,
+		type:'DELETE',
+		beforeSend: function(){
+		},
+		success: function(json){
+			var row = $('tr[data-id='+setting_id+']'),
+				container = $('#alert-holder');
+			row.remove();
+			container.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+json.success+'</div>');
+		},
+		error: function(event, jqxhr, settings, thrownError){
+			console.log(event);
+			console.log(jqxhr);
+			console.log(settings);
+			console.log(thrownError);
+		}
+	});
+}
+//return user for editing
 function getUserAjax(url, action){
 	$.ajax({
 		url:url,
@@ -286,6 +307,20 @@ function setStatusAjax(data){
 /*****************************************
  *	Event listeners
  *****************************************/
+//remove setting
+$(document).on('click', '.remove-setting', function(e){
+	e = e || window.event;
+	e.preventDefault();
+
+	var a = confirm('Delete?');
+	if(!a){
+		return false;
+	} else {
+		var url = $(this).attr('href'),
+			setting_id = $(this).parents('tr').data('id');
+		deleteSettingAjax(url, setting_id);
+	}
+});
 //edit user button
 $(document).on('click', '.btn-edit', function(e){
 	e=e||window.event;

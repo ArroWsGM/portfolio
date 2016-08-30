@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "intervention/image": "^2.3",
         "orangehill/iseed": "dev-master",
-        "mews/purifier": "^2.0"
+        "mews/purifier": "^2.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

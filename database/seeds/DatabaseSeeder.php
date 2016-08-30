@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         #iseed_end
     }
 }
-
+/*
 class AboutTableSeeder extends Seeder {
 
     public function run()
@@ -38,7 +38,7 @@ class AboutTableSeeder extends Seeder {
         DB::table('about')->delete();
         DB::table('about')->insert([
         								'cms_name'		=> 'Valery CMS',
-        								'cms_version'	=> '2.0.0b',
+        								'cms_version'	=> '2.1.0',
         								'cms_build'		=> 'Lonesome Rider',
         								'cms_promo'		=> 'https://www.youtube.com/embed/7WdO9KhcUKE'
         							]);
@@ -122,3 +122,4 @@ class SettingsTableSeeder extends Seeder {
 		        ]);
     }
 }
+*/

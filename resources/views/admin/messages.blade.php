@@ -1,7 +1,6 @@
 @extends('admin._main')
 
 @section('page_content')
-<div id="_token" class="hidden" data-token="{{csrf_token()}}"></div>
 	<div class="row">
 		<div id="alert-holder" class="col-sm-6 col-sm-offset-3">
 		</div>

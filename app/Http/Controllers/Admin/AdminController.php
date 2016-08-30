@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Auth;
 use Session;
+use Validator;
 use App\User;
 use App\Admin\Setting;
 use Illuminate\Http\Request;
@@ -44,29 +45,78 @@ class AdminController extends Controller
     										'phpinfo' => $phpinfo_table));
     }
 //Settings page & settings managment
-    public function settings()
+    public function settingIndex()
     {
 		$settings = Setting::all();
 
 		$page_title = 'Settings';
-    	return view('admin.settings', array(	'page_title' => $page_title,
-    											'settings' => $settings));
-    	//return 'controller';
+    	return view('admin.settings', compact('page_title', 'settings'));
     }
 
-    public function upadateSettings(Request $request)
+    public function settingStore(Request $request)
     {
-		//dd($request);
-		//$settings = new Setting;
+        $v = Validator::make($request->all(), [
+            'setting_name' => 'required|between:3,128|unique:settings',
+            'setting_type' => 'required|in:string,bool,boolean,int,integer,float|max:32',
+        ]);
 
+        $v->sometimes('setting_value', 'required|integer|digits_between:1,512', function($input){
+            return ($input->setting_type == 'int' || $input->setting_type == 'integer');
+        });
+
+        $v->sometimes('setting_value', 'required|boolean|max:512', function($input){
+            return ($input->setting_type == 'bool' || $input->setting_type == 'boolean');
+        });
+
+        $v->sometimes('setting_value', 'required|string|max:512', function($input){
+            return ($input->setting_type == 'string');
+        });
+
+        $v->sometimes('setting_value', 'required|numeric|digits_between:1,512', function($input){
+            return ($input->setting_type == 'float');
+        });
+
+        if($v->fails()) {
+            Session::flash('msg_error', 'Some errors found while adding new setting');
+            return back()->withErrors($v)->withInput();
+        }
+
+        if(Setting::create($request->all()))
+            Session::flash('msg_success', 'Setting successfully added');
+
+        return back();
+    }
+
+    public function settingUpdate(Request $request)
+    {
 		foreach($request->settings as $id=>$row){
-            $this->validate($request, [
+            $v = Validator::make($request->all(), [
                 'settings.' . $id . '.setting_name' => 'required|between:3,128|unique:settings,setting_name,'.$id,
                 'settings.' . $id . '.setting_type' => 'required|in:string,bool,boolean,int,integer,float|max:32',
-                'settings.' . $id . '.setting_value' => 'max:512',
             ]);
 
-            $this->middleware('demouser');
+            $v->sometimes('settings.' . $id . '.setting_value', 'required|integer|digits_between:1,512', function($input) use($id){
+                return ($input->settings[$id]['setting_type'] == 'int' || $input->settings[$id]['setting_type'] == 'integer');
+            });
+
+            $v->sometimes('settings.' . $id . '.setting_value', 'required|boolean|max:512', function($input) use($id){
+                return ($input->settings[$id]['setting_type'] == 'bool' || $input->settings[$id]['setting_type'] == 'boolean');
+            });
+
+            $v->sometimes('settings.' . $id . '.setting_value', 'required|string|max:512', function($input) use($id){
+                return ($input->settings[$id]['setting_type'] == 'string');
+            });
+
+            $v->sometimes('settings.' . $id . '.setting_value', 'required|numeric|digits_between:1,512', function($input) use($id){
+                return ($input->settings[$id]['setting_type'] == 'float');
+            });
+
+            if($v->fails()) {
+                Session::flash('msg_error', 'Some errors found while adding new setting');
+                return back()->withErrors($v)->withInput();
+            }
+
+            unset($v);
 
 			$settings = Setting::find($id);
 			$settings->update($row);
@@ -75,32 +125,13 @@ class AdminController extends Controller
 		return back();
     }
 
-    public function addSettings(Request $request)
-    {
-    	//dd($request->all());
-		//$settings = new Setting;
-		//$settings->create($request->all());
-
-    	$this->validate($request, [
-    		'setting_name' => 'required|between:3,128|unique:settings',
-    		'setting_type' => 'required|in:string,bool,boolean,int,integer,float|max:32',
-    		'setting_value' => 'max:255',
-    	]);
-
-		if(Setting::create($request->all()))
-    		Session::flash('msg_success', 'Setting successfully added');
-
-		return back();
-    }
-
-    public function removeSettings(Request $request, Setting $setting)
+    public function settingDestroy(Setting $setting)
     {
     	if(Auth::check()){
     		$setting->destroy($setting->id);
-    		Session::flash('msg_success', 'Setting named "' . $setting->setting_name . '" was removed');
     	}
 
-		return back();
+		return response()->json(['success' => 'Setting named "' . $setting->setting_name . '" was removed']);
     }
 //
 //  Users managment

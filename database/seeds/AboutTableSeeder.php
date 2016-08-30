@@ -21,7 +21,7 @@ class AboutTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'cms_name' => 'Valery CMS',
-                'cms_version' => '2.0.0b',
+                'cms_version' => '2.1.0',
                 'cms_build' => 'Lonesome Rider',
                 'cms_promo' => 'https://www.youtube.com/embed/7WdO9KhcUKE',
             ),
