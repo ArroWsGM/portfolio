@@ -91,7 +91,8 @@
 							<a href="{{url($project->project_link)}}" target="_blank">{{parse_url($project->project_link, PHP_URL_HOST)}}</a>
 						</td>
 						<td>
-							@ellip($project->project_description, 200)
+							@eval($desc = strip_tags($project->project_description))
+							@ellip($desc, 200)
 						</td>
 						<td class="text-center">
 							<p class="lead">
