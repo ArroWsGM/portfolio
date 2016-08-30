@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //$this->call(AboutTableSeeder::class);
-        //$this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         //$this->call(SettingsTableSeeder::class);
         
 	    #iseed_start
 
-	    $this->call('UsersTableSeeder');
+	    //$this->call('UsersTableSeeder');
 	    $this->call('AboutTableSeeder');
         $this->call('GalleriesTableSeeder');
         $this->call('MessagesTableSeeder');
@@ -29,21 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call('SettingsTableSeeder');
         #iseed_end
     }
-}
-/*
-class AboutTableSeeder extends Seeder {
-
-    public function run()
-    {
-        DB::table('about')->delete();
-        DB::table('about')->insert([
-        								'cms_name'		=> 'Valery CMS',
-        								'cms_version'	=> '2.1.0',
-        								'cms_build'		=> 'Lonesome Rider',
-        								'cms_promo'		=> 'https://www.youtube.com/embed/7WdO9KhcUKE'
-        							]);
-    }
-
 }
 
 class UsersTableSeeder extends Seeder {
@@ -65,17 +50,21 @@ class UsersTableSeeder extends Seeder {
 							            'password' => bcrypt('demo'),
 								        'created_at' => $faker->dateTime,
 		        ]);
+    }
 
+}
+/*
+class AboutTableSeeder extends Seeder {
 
-		foreach(range(1,8) as $index)
-		{
-			DB::table('users')->insert([
-								            'name' => $faker->userName,
-								            'email' => $faker->email,
-								            'password' => bcrypt('test'),
-								            'created_at' => $faker->dateTime,
-			        ]);
-		}
+    public function run()
+    {
+        DB::table('about')->delete();
+        DB::table('about')->insert([
+        								'cms_name'		=> 'Valery CMS',
+        								'cms_version'	=> '2.1.0',
+        								'cms_build'		=> 'Lonesome Rider',
+        								'cms_promo'		=> 'https://www.youtube.com/embed/7WdO9KhcUKE'
+        							]);
     }
 
 }
