@@ -30,7 +30,7 @@
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 			@if($project->project_link)
 			<div class="project-description-item">
-				<p><i class="fa fa-link"></i> <a href="{{$project->project_link}}" rel="nofollow">{{parse_url($project->project_link, PHP_URL_HOST)}}</a></p>
+				<p><i class="fa fa-link"></i> <a href="{{$project->project_link}}" rel="nofollow" target="_blank">{{parse_url($project->project_link, PHP_URL_HOST)}}</a></p>
 			</div>
 			@endif
 			@eval($browsers = $project->properties->where('property.property_group', 'browser'))

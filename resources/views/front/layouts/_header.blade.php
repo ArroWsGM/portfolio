@@ -5,6 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ $page_title or 'ArroWs Development Portfolio' }}</title>
+	@if(isset($all_settings['SEO_description']))
+	<meta name="description" content="{{ $all_settings['SEO_description'] }}">
+	@endif
 	<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 	
 	<!-- Bootstrap -->
