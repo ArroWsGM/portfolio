@@ -85,7 +85,7 @@
 					<tr data-id="{{$project->id}}">
 						<td>{{($projects->currentPage()-1) * $projects->perPage() + ($key + 1)}}</td>
 						<td class="user-name">
-							<a href="{{url('admin/projects/edit/' . $project->id)}}">{{$project->project_name}}</a>
+							<a href="{{route('projects.edit', $project->id)}}">{{$project->project_name}}</a>
 						</td>
 						<td>
 							<a href="{{url($project->project_link)}}" target="_blank">{{parse_url($project->project_link, PHP_URL_HOST)}}</a>

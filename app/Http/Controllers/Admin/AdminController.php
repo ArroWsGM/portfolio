@@ -36,13 +36,12 @@ class AdminController extends Controller
 		ob_end_clean();
 
 		preg_match("/<body[^>]*>(.*?)<\/body>/is", $phpinfo_raw, $matches);
-		$phpinfo_table = $matches[1];
+		$phpinfo = $matches[1];
 
 		//dd(\Auth::check());
 
 		$page_title = 'About';
-    	return view('admin.about', array(	'page_title' => $page_title,
-    										'phpinfo' => $phpinfo_table));
+    	return view('admin.about', compact('page_title', 'phpinfo'));
     }
 //Settings page & settings managment
     public function settingIndex()
