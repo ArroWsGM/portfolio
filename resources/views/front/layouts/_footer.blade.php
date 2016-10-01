@@ -147,8 +147,6 @@
 	</div>
 </div>
 @endif
-{{-- Loading --}}
-<div class="loadanimation"><div class="spinner text-red"><i class="fa fa-gear fa-spin"></i></div></div>
 
 @yield('scripts')
 

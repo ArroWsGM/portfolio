@@ -33,5 +33,7 @@
 	<![endif]-->
 </head>
 <body>
+{{-- Loading --}}
+<div class="loadanimation"><div class="spinner text-red"><i class="fa fa-gear fa-spin"></i></div></div>
 	<div class="sticky-footer-wraper">
 		<div class="container-fluid">
