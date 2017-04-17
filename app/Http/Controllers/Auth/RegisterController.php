@@ -1,46 +1,38 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
-class AuthController extends Controller
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Register Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
     |
     */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
+    use RegistersUsers;
     /**
-     * Where to redirect users after login / registration.
+     * Where to redirect users after registration.
      *
      * @var string
      */
     protected $redirectTo = '/admin';
-    protected $redirectAfterLogout = '/admin';
-
     /**
-     * Create a new authentication controller instance.
+     * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware('guest');
     }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -55,7 +47,6 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -71,11 +62,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function showLoginForm()
-    {
-        return redirect('/admin/about');
-    }
-
     public function showRegistrationForm()
     {
         return redirect('/admin/about');
@@ -85,5 +71,4 @@ class AuthController extends Controller
     {
         return redirect('/admin/about');
     }
-
 }

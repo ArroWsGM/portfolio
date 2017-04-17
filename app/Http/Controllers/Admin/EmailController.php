@@ -6,6 +6,7 @@ use Auth;
 use Mail;
 
 use App\Admin\Message;
+use App\Mail\AdminReplyMessage;
 
 use Illuminate\Http\Request;
 
@@ -37,13 +38,9 @@ class EmailController extends Controller
     		'reply' => 'required|min:10',
     	]);
 
-        Mail::send('admin.emails.reply_email', ['reply' => $request->reply, 'title' => $request->subject], function ($m) use ($request) {
-            $m->from(env('MAIL_USERNAME', $request->from));
-            $m->replyTo($request->from);
-            $m->bcc($request->from);
-
-            $m->to($request->email, $request->email)->subject($request->subject);
-        });
+        Mail::to($request->email)
+            ->bcc($request->from)
+            ->send(new AdminReplyMessage($request));
 
         return redirect('/admin/messages')->with('msg_success', 'Email to ' . $request->name . ' sended');
     }

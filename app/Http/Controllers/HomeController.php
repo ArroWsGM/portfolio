@@ -11,18 +11,25 @@ use App\Project;
 use App\Message;
 use App\Admin\Setting;
 use App\Events\ProjectWasViewed;
+use App\Notifications\newMessageNotification;
+use App\User;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
-    private $locale;
-
     public function __construct(Request $request){
-        $locale = Session::has('locale') ? Session::get('locale') : setLocaleByIP($request->ip());
-        App::setLocale($locale);
-        $this->locale = $locale;
+
+        $this->middleware(function ($request, $next) {
+
+            $locale = $request->session()->has('locale') ? $request->session()->get('locale') : setLocaleByIP($request->ip());
+
+            App::setLocale($locale);
+
+            return $next($request);
+        });
     }
 
     public function index()
@@ -30,7 +37,7 @@ class HomeController extends Controller
         $all_settings = Setting::getAllSettings();
         $page_title = trans('app.portfolio');
 
-        $locale = $this->locale;
+        $locale = App::getLocale();
 
         $projects = Project::with([
                                     'galleries' => function($query){
@@ -50,7 +57,7 @@ class HomeController extends Controller
 
         if(!in_array($locale, ['uk', 'en']))
             $locale = 'en';
-        
+
         Session::put('locale', $locale);
 
         return back();
@@ -94,19 +101,15 @@ class HomeController extends Controller
             'subject' => $request->subject,
             'phone' => $request->phone,
             'message' => $request->message,
-            'msg' => $request->message,
             'ip' => $request->ip(),
         ];
 
         $all_settings = Setting::getAllSettings();
 
         if(isset($all_settings['email_message_resend']) && $all_settings['email_message_resend'] && isset($all_settings['email_admin']) && !empty($all_settings['email_admin'])){
-            Mail::send('front.emails.contactme', $msg, function ($m) use ($msg, $all_settings) {
-                $m->from(env('MAIL_USERNAME', 'admin@valery.cms'));
-                $m->replyTo(!empty($msg['email']) ? $msg['email'] : 'not@set.email', $msg['name']);
-
-                $m->to($all_settings['email_admin'])->subject($msg['subject']);
-            });
+            $admin = User::where('name', 'admin')->first();
+            if($admin)
+                Notification::send($admin, new newMessageNotification($msg));
         }
 
         if(Message::create($msg))

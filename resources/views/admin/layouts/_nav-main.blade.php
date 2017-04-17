@@ -57,7 +57,14 @@
 							</div>
 						</form>
 						@else
-						<a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
+						<a href="{{ url('/logout') }}"
+						   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+							<i class="fa fa-btn fa-sign-out"></i> Logout
+						</a>
+
+						<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+							{{ csrf_field() }}
+						</form>
 						@endif
 					</div>
 				</li>

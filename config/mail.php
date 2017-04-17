@@ -55,7 +55,10 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => [
+        'address' => 'noreply@arrows-development.com',
+        'name' => config('app.name', 'Admin'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

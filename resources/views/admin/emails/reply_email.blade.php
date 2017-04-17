@@ -2,9 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{$title}}</title>
+    <title>{{$msg->subject}}</title>
+    <style>
+        body {
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+    </style>
 </head>
 <body>
-{!!$reply!!}
+{!!$msg->reply!!}
 </body>
 </html>
