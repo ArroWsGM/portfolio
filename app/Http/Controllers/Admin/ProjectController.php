@@ -72,7 +72,7 @@ class ProjectController extends Controller
 														},
 									'properties.property'
 								])->find($project->id);
-		$used_properties = ProjectProperty::where('project_id', $project->id)->lists('property_id');
+		$used_properties = ProjectProperty::where('project_id', $project->id)->pluck('property_id');
 		$all_properties = Property::whereNotIn('id', $used_properties)->get();
 
     	return view('admin.project_edit', compact('page_title', 'project', 'all_properties', 'used_properties', 'tinymce'));
