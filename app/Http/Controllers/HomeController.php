@@ -104,15 +104,18 @@ class HomeController extends Controller
             'ip' => $request->ip(),
         ];
 
+        $created = Message::create($msg);
+
         $all_settings = Setting::getAllSettings();
 
         if(isset($all_settings['email_message_resend']) && $all_settings['email_message_resend'] && isset($all_settings['email_admin']) && !empty($all_settings['email_admin'])){
-            $admin = User::where('name', 'admin')->first();
+            $admin = new User(['name' => 'admin', 'email' => $all_settings['email_admin']]);
+
             if($admin)
-                Notification::send($admin, new newMessageNotification($msg));
+                Notification::send($admin, new newMessageNotification($created));
         }
 
-        if(Message::create($msg))
+        if($created)
         {
             return ['success' => trans('app.msgsend')];
         }

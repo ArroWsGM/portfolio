@@ -42,22 +42,21 @@ class newMessageNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $list = '<ul>';
-        $list .= '<li><strong>From:</strong> ' . $this->message['name'] . '</li>';
-        $list .= '<li><strong>Subject:</strong> ' . $this->message['subject'] . '</li>';
-        if($this->message['email'])
-            $list .= '<li><strong>Email:</strong> ' . $this->message['email'] . '</li>';
-        if($this->message['phone'])
-            $list .= '<li><strong>Phone:</strong> ' . $this->message['phone'] . '</li>';
-        $list .= '</ul>';
+        $email = $this->message->email ? '['. $this->message->email .'](mailto:' . $this->message->email . ')' : 'Not set';
+        $phone = $this->message->phone ? $this->message->phone : 'Not set';
 
         return (new MailMessage)
+                    ->replyTo($this->message->email, $this->message->name)
                     ->greeting('You have a new message.')
-                    ->line($list)
+                    ->line('__From:__ ' . $this->message->name . '  ')
+                    ->line('__Subject:__ ' . $this->message->subject . '  ')
+                    ->line('__Email:__ ' . $email . '  ')
+                    ->line('__Phone:__ ' . $phone . '  ')
                     ->line('Message:')
-                    ->line(nl2br($this->message['message']))
+                    ->line($this->message->message)
                     ->success()
-                    ->action('Watch now', url('/admin/messages'));
+                    ->action('Watch now', url('/admin/messages/' . $this->message->id))
+                    ->salutation('Buy.');
     }
 
     /**

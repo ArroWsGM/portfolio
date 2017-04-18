@@ -23,7 +23,7 @@ class Project
      * Handle the event.
      *
      * @param  ProjectWasViewed  $event
-     * @return void
+     * @return boolean
      */
     public function viewed(ProjectWasViewed $event)
     {

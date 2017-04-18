@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 use App\Admin\Message;
 use App\Mail\AdminReplyMessage;
@@ -38,10 +38,10 @@ class EmailController extends Controller
     		'reply' => 'required|min:10',
     	]);
 
-        Mail::to($request->email)
+        Mail::to($request->email, $request->name)
             ->bcc($request->from)
             ->send(new AdminReplyMessage($request));
 
-        return redirect('/admin/messages')->with('msg_success', 'Email to ' . $request->name . ' sended');
+        return redirect('/admin/messages')->with('msg_success', 'Email to ' . $request->name . ' was sent.');
     }
 }
