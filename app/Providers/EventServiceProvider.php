@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ProjectWasViewed' => [
             'App\Listeners\Project@viewed',
         ],
+        'App\Events\WriteStatistic' => [
+            'App\Listeners\StatisticListener@write',
+        ],
     ];
 
     /**

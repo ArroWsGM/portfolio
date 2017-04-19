@@ -50,7 +50,13 @@ Route::group(['prefix' => 'admin'], function(){
         'uses' => 'Admin\MessageController@index',
     ]);
 
+
     Route::group(['middleware' => 'demouser'], function () {
+        //Statistic
+        Route::get('statistic', [
+            'as' => 'statistic',
+            'uses' => 'Admin\StatisticController@index',
+        ]);
         //Settings
         Route::group(['prefix' => 'settings'], function() {
             Route::get('', [

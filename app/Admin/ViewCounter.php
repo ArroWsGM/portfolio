@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ViewCounter extends Model
 {
@@ -19,5 +20,10 @@ class ViewCounter extends Model
     public function project()
     {
     	return $this->belongsTo(Project::class);
+    }
+
+    public function scopeLastWeek($query)
+    {
+        return $query->where('updated_at', '>',Carbon::now()->subWeek());
     }
 }

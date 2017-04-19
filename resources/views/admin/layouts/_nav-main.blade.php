@@ -25,6 +25,7 @@
 			</ul>
 			@endif
 			<ul class="nav navbar-nav navbar-right">
+				<li{!! Request::is('admin/statistic*') ? ' class="active"' : '' !!}><a href="{{route('statistic')}}">Statistic</a></li>
 				<li{!! ($view_name == 'admin.about') ? ' class="active"' : '' !!}><a href="{{ url('/admin/about') }}">About</a></li>
 				<li><a href="#" data-toggle="modal" data-target="#debug-modal">Debug</a></li>
 				<li class="dropdown">
