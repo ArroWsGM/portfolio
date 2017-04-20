@@ -127,7 +127,7 @@
 	</div>
 </div>
 {{-- Debug --}}
-@if(env('APP_DEBUG', 'false') == true)
+@if(env('APP_DEBUG', false) == true)
 <div class="modal" id="debug-modal" tabindex="-1" role="dialog" aria-labelledby="debug-modal-label">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">

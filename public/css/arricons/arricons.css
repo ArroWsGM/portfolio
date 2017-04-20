@@ -83,6 +83,10 @@
 .arricon-angularjs:before{
   content: "\f503";
 }
+.arricon-vue:before,
+.arricon-vuejs:before{
+  content: "\f505";
+}
 .arricon-ci:before,
 .arricon-codeigniter:before{
   content: "\f601";
