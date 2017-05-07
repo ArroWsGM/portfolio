@@ -21,16 +21,22 @@ function makeImages($destination, $name, $extension)
 	}	
 }
 
-function getAllImageNames($name, $path = '')
+function getAllImageNames($name, $path = '', $assoc = false)
 {
 	$chunks = explode('.', $name);
 	$sizes = \App\Admin\Setting::getAllSettings()['images'];
 
 	foreach($sizes as $key => $val){
-		$names[] = $path . $chunks[0] . '_' . $key . '.' . $chunks[1];
+	    if($assoc)
+		    $names[$key] = url($path . $chunks[0] . '_' . $key . '.' . $chunks[1]);
+	    else
+		    $names[] = $path . $chunks[0] . '_' . $key . '.' . $chunks[1];
 	}
 
-	$names[] = $path . $chunks[0] . '.' . $chunks[1];
+	if($assoc)
+	    $names['full'] = url($path . $chunks[0] . '.' . $chunks[1]);
+    else
+	    $names[] = $path . $chunks[0] . '.' . $chunks[1];
 
 	return $names;
 }
@@ -53,7 +59,7 @@ function getNumbers($str)
 	return implode('', $matches[0]);
 }
 
-function setLocaleByIP($ip)
+function setLocaleByIP($ip, $return_only = false)
 {
 	$url = "http://ipinfo.io/$ip/country";
 
@@ -66,10 +72,12 @@ function setLocaleByIP($ip)
     curl_close($curl);
 
     if(in_array($response, ['UA', 'BY', 'KZ', 'MD', 'RU'])){
-		\Session::put('locale', 'uk');
+        if(!$return_only)
+		    \Session::put('locale', 'uk');
 		return 'uk';
     } else {
-		\Session::put('locale', 'en');
+        if(!$return_only)
+		    \Session::put('locale', 'en');
 		return 'en';
 	}
 }

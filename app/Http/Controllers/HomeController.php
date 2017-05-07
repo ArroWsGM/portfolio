@@ -34,6 +34,15 @@ class HomeController extends Controller
 
     public function index()
     {
+        $description = Setting::getAllSettings()['SEO_description'];
+        $page_title = trans('app.portfolio');
+        $locale = App::getLocale();
+
+        return view('front.vue_home', compact('page_title', 'description', 'locale'));
+    }
+
+    public function indexOld()
+    {
         $all_settings = Setting::getAllSettings();
         $page_title = trans('app.portfolio');
 

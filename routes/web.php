@@ -191,6 +191,10 @@ Route::get('/', [
     'as' => 'front.index',
     'uses' => 'HomeController@index',
 ]);
+Route::get('/old', [
+    'as' => 'front.old_index',
+    'uses' => 'HomeController@indexOld',
+]);
 Route::post('setlocale', [
     'as' => 'front.setLocale',
     'uses' => 'HomeController@setLocale',

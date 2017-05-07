@@ -63,6 +63,9 @@
 .arricon-jqui:before{
   content: "\f303";
 }
+.arricon-bulma:before{
+    content: "\f304";
+}
 .arricon-npm:before{
   content: "\f401";
 }
@@ -74,6 +77,9 @@
 }
 .arricon-bower:before{
   content: "\f404";
+}
+.arricon-webpack:before{
+  content: "\f405";
 }
 .arricon-njs:before,
 .arricon-nodejs:before{

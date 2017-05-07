@@ -1,0 +1,81 @@
+$i: 0;
+@while $i < 100 {
+    $i: $i + 5;
+    .mtop-#{$i}{
+        margin-top: $i + px;
+    }
+    .mbot-#{$i}{
+        margin-bottom: $i + px;
+    }
+    .mleft-#{$i}{
+        margin-left: $i + px;
+    }
+    .mright-#{$i}{
+        margin-right: $i + px;
+    }
+    .mside-#{$i}{
+        margin-left: $i + px;
+        margin-right: $i + px;
+    }
+    .ptop-#{$i}{
+        padding-top: $i + px;
+    }
+    .pbot-#{$i}{
+        padding-bottom: $i + px;
+    }
+    .pleft-#{$i}{
+        padding-left: $i + px;
+    }
+    .pright-#{$i}{
+        padding-right: $i + px;
+    }
+    .pside-#{$i}{
+        padding-left: $i + px;
+        padding-right: $i + px;
+    }
+}
+
+
+.is-animated{
+    transition: all 0.2s ease-out;
+}
+
+
+.is-adaptive{
+    font-size: .6rem;
+    line-height: .6;
+    .fa{
+        font-size: .6rem;
+        line-height: .6;
+        @media screen and (min-width: $tablet) {
+            font-size: .75rem;
+            line-height: .75;
+        }
+        @media screen and (min-width: $desktop) {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+    }
+    @media screen and (min-width: $tablet) {
+        font-size: .75rem;
+        line-height: .75;
+    }
+    @media screen and (min-width: $desktop) {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+
+.has-text-right.is-touch-left{
+    text-align: left;
+    @media screen and (min-width: $tablet) {
+        text-align: right;
+    }
+}
+
+
+.text-red{
+    color: $red !important;
+}

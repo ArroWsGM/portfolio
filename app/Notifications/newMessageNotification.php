@@ -45,18 +45,23 @@ class newMessageNotification extends Notification
         $email = $this->message->email ? '['. $this->message->email .'](mailto:' . $this->message->email . ')' : 'Not set';
         $phone = $this->message->phone ? $this->message->phone : 'Not set';
 
-        return (new MailMessage)
-                    ->replyTo($this->message->email, $this->message->name)
-                    ->greeting('You have a new message.')
-                    ->line('__From:__ ' . $this->message->name . '  ')
-                    ->line('__Subject:__ ' . $this->message->subject . '  ')
-                    ->line('__Email:__ ' . $email . '  ')
-                    ->line('__Phone:__ ' . $phone . '  ')
-                    ->line('Message:')
-                    ->line($this->message->message)
-                    ->success()
-                    ->action('Watch now', url('/admin/messages/' . $this->message->id))
-                    ->salutation('Buy.');
+        $mail = new MailMessage;
+
+        if($email != 'Not set')
+            $mail->replyTo($this->message->email, $this->message->name);
+
+        $mail->greeting('You have a new message.')
+            ->line('__From:__ ' . $this->message->name . '  ')
+            ->line('__Subject:__ ' . $this->message->subject . '  ')
+            ->line('__Email:__ ' . $email . '  ')
+            ->line('__Phone:__ ' . $phone . '  ')
+            ->line('Message:')
+            ->line($this->message->message)
+            ->success()
+            ->action('Watch now', url('/admin/messages/' . $this->message->id))
+            ->salutation('Buy.');
+
+        return $mail;
     }
 
     /**

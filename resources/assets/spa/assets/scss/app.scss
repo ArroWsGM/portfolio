@@ -1,0 +1,11 @@
+//Vendors
+$red: red;
+@import '~bulma/sass/utilities/variables';
+@import url(https://fonts.googleapis.com/css?family=Marck+Script&subset=latin,latin-ext,cyrillic);
+
+//Mixins
+@import 'mixin';
+
+//App chunks
+@import 'modifiers';
+@import 'elements';

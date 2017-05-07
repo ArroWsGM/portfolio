@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-sm-12 text-center">
 			<h2>View statistic</h2>
-            @eval($to = new \Carbon\Carbon('last tuesday'))
-            @eval($from = (new \Carbon\Carbon('last tuesday'))->subWeek())
+            @eval($to = new \Carbon\Carbon($stat->first()->updated_at))
+            @eval($from = (new \Carbon\Carbon($stat->first()->updated_at))->subWeek())
             @eval(\Carbon\Carbon::setToStringFormat('d F Y');)
             <p>{{ $from }} - {{ $to }}</p>
 		</div>

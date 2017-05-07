@@ -159,14 +159,16 @@ class ProjectController extends Controller
 			
 			$gallery = new Gallery($data);
 	
-			Project::find($project->id)->galleries()->save($gallery);
+//			Project::find($project->id)->galleries()->save($gallery);
+            $project->galleries()->save($gallery);
 		}
 
 		if(!empty($request->properties_toadd)){
 			$prop_ids = explode(',', $request->properties_toadd);
 			foreach ($prop_ids as $prop) {
 				$property = new ProjectProperty(['project_id' => $project->id, 'property_id' => $prop]);
-				Project::find($project->id)->properties()->save($property);
+//				Project::find($project->id)->properties()->save($property);
+				$project->properties()->save($property);
 			}
 		}
 
@@ -234,14 +236,14 @@ class ProjectController extends Controller
 			
 			$gallery = new Gallery($data);
 	
-			Project::find($project->id)->galleries()->save($gallery);
+			$project->galleries()->save($gallery);
 		}
 
 		if(!empty($request->properties_toadd)){
 			$prop_ids = explode(',', $request->properties_toadd);
 			foreach ($prop_ids as $prop) {
 				$property = new ProjectProperty(['project_id' => $project->id, 'property_id' => $prop]);
-				Project::find($project->id)->properties()->save($property);
+				$project->properties()->save($property);
 			}
 		}
 

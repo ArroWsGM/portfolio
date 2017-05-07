@@ -1,3 +1,6 @@
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type"
+
 php_value xdebug.auto_trace 0
 php_value xdebug.trace_format  0
 php_value xdebug.trace_options  0

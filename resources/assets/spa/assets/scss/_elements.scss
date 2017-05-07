@@ -1,0 +1,156 @@
+.heading-main{
+    color: $red;
+    font-family: 'Marck Script', 'Times New Roman', serif;
+    font-size: 1.5rem;
+    @media screen and (min-width: $tablet) {
+        font-size: 2.5rem;
+    }
+    @media screen and (min-width: $desktop) {
+        font-size: 4rem;
+    }
+    &.sub{
+        font-size: 1.35rem;
+        @media screen and (min-width: $tablet) {
+            font-size: 2rem;
+        }
+        @media screen and (min-width: $desktop) {
+            font-size: 3rem;
+        }
+    }
+}
+
+
+.bordered{
+    padding-bottom: 2px !important;
+    background-image: -moz-linear-gradient(left,  rgba(191,11,11,0) 0%, rgba(191,11,11,0.68) 10%, rgba(191,11,11,1) 50%, rgba(191,11,11,0.68) 90%, rgba(191,11,11,0) 100%);
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(191,11,11,0)), color-stop(10%,rgba(191,11,11,0.68)), color-stop(50%,rgba(191,11,11,1)), color-stop(90%,rgba(191,11,11,0.68)), color-stop(100%,rgba(191,11,11,0)));
+    background-image: -webkit-linear-gradient(left,  rgba(191,11,11,0) 0%,rgba(191,11,11,0.68) 10%,rgba(191,11,11,1) 50%,rgba(191,11,11,0.68) 90%,rgba(191,11,11,0) 100%);
+    background-image: -o-linear-gradient(left,  rgba(191,11,11,0) 0%,rgba(191,11,11,0.68) 10%,rgba(191,11,11,1) 50%,rgba(191,11,11,0.68) 90%,rgba(191,11,11,0) 100%);
+    background-image: -ms-linear-gradient(left,  rgba(191,11,11,0) 0%,rgba(191,11,11,0.68) 10%,rgba(191,11,11,1) 50%,rgba(191,11,11,0.68) 90%,rgba(191,11,11,0) 100%);
+    background-image: linear-gradient(to right, rgba(191, 11, 11, 0) 0%, rgba(191, 11, 11, 0.68) 10%, #bf0b0b 50%, rgba(191, 11, 11, 0.68) 90%, rgba(191, 11, 11, 0) 100%) !important;
+    background-position: center bottom !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 2px !important;
+    box-shadow: none !important;
+}
+
+
+.loader{
+    &.is-centered{
+        margin: 0 auto;
+    }
+    &.is-medium{
+        width: 2em;
+        height: 2em;
+        border-width: 4px;
+    }
+    &.is-large{
+        width: 5em;
+        height: 5em;
+        border-width: 8px;
+    }
+
+}
+
+
+.hero.is-black{
+    .input,
+    .textarea{
+        background-color: transparent;
+        color: $grey-light;
+    }
+    .label{
+        color: $grey-light;
+    }
+}
+.control.has-icons-left,
+.control.has-icons-right{
+    .input,
+    .input:focus {
+        ~.icon {
+            &.is-success {
+                color: $success;
+            }
+            &.is-danger {
+                color: $danger;
+            }
+        }
+    }
+}
+
+
+.hero{
+    &.is-black{
+        .content{
+            @for $i from 1 through 6 {
+                h#{$i} {
+                    color: $grey-lighter;
+                }
+            }
+            p, div{
+                color: $grey-light;
+            }
+        }
+    }
+}
+
+
+.list-unstyled{
+    padding-left: 0;
+    list-style: none;
+}
+.content{
+    .list-unstyled{
+        list-style: none;
+        margin-left: 0;
+    }
+}
+
+
+.icon.is-small{
+    .arricon {
+        font-size: 14px;
+    }
+}
+.icon.is-medium{
+    .arricon {
+        font-size: 28px;
+    }
+}
+.icon.is-large{
+    .arricon {
+        font-size: 42px;
+    }
+}
+
+
+.image{
+    &.is-16by10{
+        padding-top: 62.5%;
+        img{
+            @include overlay;
+            height: 100%;
+            width: auto;
+            margin: auto;
+        }
+    }
+}
+
+
+.video{
+    display: block;
+    position: relative;
+    video, iframe{
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+    &.is-16by10{
+        padding-top: 62.5%;
+        video, iframe{
+            @include overlay;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}

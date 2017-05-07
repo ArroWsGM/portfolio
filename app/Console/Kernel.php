@@ -25,6 +25,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('stat:write')
-                  ->cron('* * * * * 2');
+                  ->weekly()->tuesdays()->at('2:00');
     }
 }
