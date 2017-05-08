@@ -1,7 +1,7 @@
 <template>
     <div class="content is-medium mtop-20 mbot-20 pside-20">
         <div class="loader is-large is-centered" v-if="!project && !error404"></div>
-        <div class="" v-if="error404">Page not found</div>
+        <div class="" v-if="error404" v-html="error404text">Page not found</div>
         <template v-if="project && !error404">
             <div class="columns is-multiline">
                 <div class="column is-12">
@@ -147,7 +147,11 @@
             },
             i18n(){
                 return _bus.i18n[_bus.locale]
+            },
+            error404text(){
+                return this.i18n.page404.replace('%s', '<code>' + this.$route.path + '</code>')
             }
+
         },
         created(){
             if (_bus.slug === this.slug && _bus.project)

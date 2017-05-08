@@ -169,6 +169,9 @@ Route::group(['prefix' => 'admin'], function(){
             ]);
         });
     });
+    Route::any('{wildcard}', function (){
+        return \App::abort(404);
+    })->where('wildcard', '.+');
 });
 
 /*
@@ -207,6 +210,8 @@ Route::post('sendmessage', [
     'as' => 'front.message',
     'uses' => 'HomeController@addMessage',
 ]);
+
+Route::any('{wildcard}', 'HomeController@index')->where('wildcard', '.+');
 
 //Route::get('/test', function(){
 //    \App::setLocale('uk');

@@ -76,13 +76,13 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <masked-input class="input" type="text" placeholder="+380(xx)xxx-xx-xx"
-                                          :class="{
-                                        'is-danger': (validation.hasError('message.phone') && message.phone.length > 0) || (response.e422 && response.e422.phone),
-                                        'is-success': validation.isPassed('message.phone') && message.phone.length > 0
-                               }"
-                                          v-model.trim="message.phone"
-                                          mask="\+\380(11)111-11-11"
+                            <masked-input class="input" type="tel" placeholder="+380(xx)xxx-xx-xx"
+                                            :class="{
+                                                'is-danger': (validation.hasError('message.phone') && message.phone.length > 0) || (response.e422 && response.e422.phone),
+                                                'is-success': validation.isPassed('message.phone') && message.phone.length > 0
+                                            }"
+                                            v-model.trim="message.phone"
+                                            mask="\+380(11)111-11-11"
                             ></masked-input>
                             <span class="icon is-small is-left">
                             <i class="fa fa-phone-square"></i>
