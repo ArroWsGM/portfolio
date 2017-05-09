@@ -17,6 +17,6 @@ return [
     'message'         => 'Message',
     'send'            => 'Send',
     'blacklist'       => 'Your IP is in blacklist, sorry',
-    'msgsend'         => 'Message sended',
+    'msgsend'         => 'Message sent',
     'msgerror'        => 'There is an error occured while sending you message',
 ];

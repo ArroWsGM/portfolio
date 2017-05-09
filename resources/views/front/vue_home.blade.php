@@ -2,7 +2,7 @@
 <html lang="{{ $locale }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="api:url" content="{{ url('/api/1.0') }}/">
     <title>{{ $page_title or 'ArroWs Development Portfolio' }}</title>
@@ -15,12 +15,13 @@
 </head>
 <body>
     <div id="app">
-        <p>Please, turn on javascript or update you browser. Also, you can load an <a href="{{ url('/old') }}">older app version</a>.</p>
-        <p>Будь ласка, увімкніть Javascript або оновіть Ваш браузер. Крім того, Ви можете завантажити <a href="{{ url('/old') }}"> стару версію сайту</a>.</p>
+        <p>Please, turn on javascript or <a href="https://browser-update.org/update.html" target="_blank" rel="nofollow">update your browser</a>. Also, you can load an <a href="{{ url('/old') }}">older app version</a>.</p>
+        <p>Будь ласка, увімкніть Javascript або <a href="https://browser-update.org/update.html" target="_blank" rel="nofollow">оновіть Ваш браузер</a>. Крім того, Ви можете завантажити <a href="{{ url('/old') }}"> стару версію сайту</a>.</p>
     </div>
-
+    <!--[if !IE]><!-->
     <script src="{{ mix('/spa/manifest.js') }}"></script>
     <script src="{{ mix('/spa/vendor.js') }}"></script>
     <script src="{{ mix('/spa/app.js') }}"></script>
+    <!--<![endif]-->
 </body>
 </html>

@@ -1,2 +1,3 @@
-$arr-font-dir: './arricons/fonts';
-@import './arricons/arricons.scss';
+$arr-font-dir: '~arricons/src/fonts';
+$arr-name:     'arricon';
+@import        '~arricons/src/arricons.scss';
