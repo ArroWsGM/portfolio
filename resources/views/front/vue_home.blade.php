@@ -2,7 +2,7 @@
 <html lang="{{ $locale }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="api:url" content="{{ url('/api/1.0') }}/">
     <title>{{ $page_title or 'ArroWs Development Portfolio' }}</title>
@@ -20,6 +20,7 @@
     </div>
     <!--[if !IE]><!-->
     <script src="{{ mix('/spa/manifest.js') }}"></script>
+    <script src="{{ mix('/spa/iepatch.js') }}"></script>
     <script src="{{ mix('/spa/vendor.js') }}"></script>
     <script src="{{ mix('/spa/app.js') }}"></script>
     <!--<![endif]-->

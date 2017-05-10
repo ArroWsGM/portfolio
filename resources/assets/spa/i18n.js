@@ -31,7 +31,7 @@ export default {
         validateerrors                : 'Whoops! It looks like there is some errors in this form',
         validatename                  : 'The name field is required and must be between 2 and 128 chars length',
         validateemail                 : 'The email field must be a valid email address',
-        validatephone                 : 'The phone field format is invalid',
+        validatephone                 : 'The phone field format must be +380(xx)xxx-xx-xx, where x - number from 0 to 9, only Ukraine\'s phone numbers (+380) is accepted',
         validatesubject               : 'Subject field is required and must be between 3 and 128 chars length',
         validatemessage               : 'Message field is required and must be at least 10 chars',
     },
@@ -64,7 +64,7 @@ export default {
         validateerrors                : 'Схоже, що є деякі помилки в цій формі',
         validatename                  : 'Це поле є обов\'язковим і повинно містити від 2 до 128 символів',
         validateemail                 : 'Поле email повинне містити коректну електронну адресу',
-        validatephone                 : 'Це поле має хибний формат',
+        validatephone                 : 'Телефон повинен мати формат +380(xx)xxx-xx-xx, де x цифра від 0 до 9',
         validatesubject               : 'Це поле є обов\'язковим і повинно містити від 3 до 128 символів',
         validatemessage               : 'Це поле є обов\'язковим і повинно містити не менш ніж 10 символів',
     }

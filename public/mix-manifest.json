@@ -1,7 +1,8 @@
 {
   "/spa/app.js": "/spa/app.js",
+  "/spa/vendor.js": "/spa/vendor.js",
+  "/spa/iepatch.js": "/spa/iepatch.js",
   "/spa/app.css": "/spa/app.css",
   "/spa/vendor.css": "/spa/vendor.css",
-  "/spa/vendor.js": "/spa/vendor.js",
   "/spa/manifest.js": "/spa/manifest.js"
 }
