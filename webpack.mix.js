@@ -11,7 +11,8 @@ const { mix } = require('laravel-mix');
  |
  */
 
- mix.js('resources/assets/spa/iepatch.js', 'public/spa/iepatch.js')
+ mix.disableNotifications()
+    .js('resources/assets/spa/oldpatch.js', 'public/spa/oldpatch.js')
     .js('resources/assets/spa/main.js', 'public/spa/app.js')
     .extract(['axios', 'vue', 'vue-masked-input', 'vue-router', 'vue-youtube-embed'])
     .sass('resources/assets/spa/assets/scss/app.scss', 'public/spa')

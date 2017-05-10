@@ -18,11 +18,12 @@
         <p>Please, turn on javascript or <a href="https://browser-update.org/update.html" target="_blank" rel="nofollow">update your browser</a>. Also, you can load an <a href="{{ url('/old') }}">older app version</a>.</p>
         <p>Будь ласка, увімкніть Javascript або <a href="https://browser-update.org/update.html" target="_blank" rel="nofollow">оновіть Ваш браузер</a>. Крім того, Ви можете завантажити <a href="{{ url('/old') }}"> стару версію сайту</a>.</p>
     </div>
+    <script>
+        window._baseURL = '{{ url('/') }}';
+    </script>
     <!--[if !IE]><!-->
     <script src="{{ mix('/spa/manifest.js') }}"></script>
-    <script src="{{ mix('/spa/iepatch.js') }}"></script>
-    <script src="{{ mix('/spa/vendor.js') }}"></script>
-    <script src="{{ mix('/spa/app.js') }}"></script>
+    <script src="{{ mix('/spa/oldpatch.js') }}"></script>
     <!--<![endif]-->
 </body>
 </html>
