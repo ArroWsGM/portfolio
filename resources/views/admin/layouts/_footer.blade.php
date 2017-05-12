@@ -14,7 +14,6 @@
 <script src="/js/bootstrap.min.js"></script>
 @if(isset($tinymce) && $tinymce)
 <script src="/js/tinymce/tinymce.min.js"></script>
-<script src="/js/tinymce/jquery.tinymce.min.js"></script>
 @endif
 {{-- Підключення додаткового файлу script.js --}}
 <script src="/js/script_admin.js"></script>

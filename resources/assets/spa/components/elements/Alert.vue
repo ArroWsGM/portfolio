@@ -21,6 +21,10 @@
                 type: Boolean,
                 default: true
             },
+            timer: {
+                type: Number,
+                default: 5
+            },
             type: {
                 type: String,
                 default: ''
@@ -56,6 +60,13 @@
         methods:{
             dismiss(){
                 this.$emit('inforemerHide')
+            }
+        },
+        mounted(){
+            if(!this.dismissable){
+                setTimeout(()=>{
+                    this.dismiss()
+                }, this.timer*1000)
             }
         }
     }

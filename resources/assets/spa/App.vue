@@ -13,18 +13,32 @@
             </div>
         </div>
         <arr-footer></arr-footer>
+        <transition>
+            <arr-alert
+                    v-if="alertShow"
+                    @inforemerHide="alertShow = false"
+                    type="warning"
+                    :prefix="i18n.warning"
+                    :dismissable="false"
+                    :timer="10"
+            >
+                <span v-html="i18n.oldbrowser"></span>
+            </arr-alert>
+        </transition>
     </section>
 </template>
 
 <script>
     import arrCarousel from './components/arrcarousel/Carousel.vue'
+    import arrAlert from './components/elements/Alert.vue'
     import { _bus } from './_bus'
     export default {
         data(){
             return {
                 error404: false,
                 lightsOff: true,
-                locale: null
+                locale: null,
+                alertShow: false
             }
         },
         methods: {
@@ -55,30 +69,13 @@
 
                     this.getProjects()
                 })
+
+            if(isOldBrowser)
+                this.alertShow = true
         },
         components: {
-            arrCarousel
+            arrCarousel,
+            arrAlert
         }
     }
 </script>
-
-<style scoped lang="scss">
-    .slide-enter{
-        transform: translateX(50%);
-        opacity: 0;
-    }
-    .slide-enter-active, .slide-leave-active{
-        transition: .25s;
-    }
-    .slide-enter-to, .slide-leave{
-        transform: translateX(0%);
-        opacity: 1;
-    }
-    .slide-leave-to{
-        transform: translateX(-50%);
-        opacity: 0;
-    }
-    .hero{
-        transition: color, background-color 1s;
-    }
-</style>

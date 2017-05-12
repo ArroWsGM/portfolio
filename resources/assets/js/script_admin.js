@@ -467,6 +467,7 @@ $(function(){
 	if($('.tinymce-field').length){
 		tinymce.init({
 		  selector: '.tinymce-field',
+		  width: 'auto',
 		  height: 300,
 		  plugins: [
 		    'advlist autolink lists link image charmap print preview anchor',

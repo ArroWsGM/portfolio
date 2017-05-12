@@ -8,6 +8,10 @@ var isOldChrome = function(){
     var ua = window.navigator.userAgent;
     if(ua.match(/chrome\/\d{2}/i)) {
         return (parseInt(ua.match(/chrome\/\d{2}/i)[0].split('/')[1]) < 45 )
+    } else if(ua.match(/firefox\/\d{2}/i)) {
+        return (parseInt(ua.match(/firefox\/\d{2}/i)[0].split('/')[1]) < 44 )
+    } else if(ua.match(/presto\//i)) {
+        return true
     } else {
         return false
     }

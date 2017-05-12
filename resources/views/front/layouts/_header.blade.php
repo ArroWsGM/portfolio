@@ -9,19 +9,19 @@
 	<meta name="description" content="{{ $all_settings['SEO_description'] }}">
 	@endif
 	<link href="/favicon.ico" rel="icon" type="image/x-icon" />
-	
+
 	<!-- Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/css/bootstrap.css') }}">
 
 	<!-- Arricons -->
-	<link rel="stylesheet" type="text/css" href="/css/arricons/arricons.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/css/arricons.css') }}">
 
 	<!-- Font Awesome -->
-	<link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/css/font-awesome.css') }}">
 	
 	<!-- Головий файл стиля-->
 	{{--<link rel="stylesheet" type="text/css" href="{{ elixir('css/style.css') }}">--}}
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}">
 
 	@yield('styles')
 	

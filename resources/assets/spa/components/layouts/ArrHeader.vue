@@ -21,7 +21,7 @@
 
                 </div>
                 <div class="nav-center">
-                    <h1 class="nav-item heading-main"><router-link :to="'/'" class="text-red">{{ i18n.title }}</router-link></h1>
+                    <h1 class="nav-item heading-main"><router-link :to="'/'">{{ i18n.title }}</router-link></h1>
                 </div>
                 <span class="nav-toggle" @click="toggled = !toggled">
                     <span></span>

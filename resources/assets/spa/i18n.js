@@ -8,6 +8,7 @@ export default {
         notfound                      : 'No projects found',
         page404                       : 'Page %s not found',
         notrespond                    : 'Remote server not responded. Please try again later.',
+        oldbrowser                    : 'You using an old browser, please update it or use a <a href="/old">previous version of app</a> if any error occurs',
         devices                       : 'Devices support',
         browsers                      : 'Browsers support',
         tech                          : 'Used technologies',
@@ -26,6 +27,7 @@ export default {
         error                         : 'Error!',
         error500                      : 'Server error during data processing. Please, try again later',
         success                       : 'Success!',
+        warning                       : 'Warning!',
 
         required                      : 'Required',
         validateerrors                : 'Whoops! It looks like there is some errors in this form',
@@ -41,6 +43,7 @@ export default {
         notfound                      : 'Жодного проекту не знайдено',
         page404                       : 'Сторінку %s не зайдено',
         notrespond                    : 'Віддалений сервер не відповідає. Будь ласка спробуйте пізніше.',
+        oldbrowser                    : 'Ви використовуєте старий браузер, будь ласка, поновіть його, або скористайтеся <a href="/old">попередньою версією сайта</a> у разі виникнення помилок',
         devices                       : 'Підтримка пристроїв',
         browsers                      : 'Підтримка браузерів',
         tech                          : 'Використані технології',
@@ -59,6 +62,7 @@ export default {
         error                         : 'Помилка!',
         error500                      : 'Помилка сервера при обробці даних. Будь ласка спробуйте пізніше',
         success                       : 'Успіх!',
+        warning                       : 'Увага!',
 
         required                      : 'Обов\'язково',
         validateerrors                : 'Схоже, що є деякі помилки в цій формі',

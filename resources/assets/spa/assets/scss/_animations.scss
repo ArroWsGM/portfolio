@@ -1,0 +1,62 @@
+//text glow
+@keyframes text-glow-big{
+    from{
+        text-shadow:    0 0 10px #fff,
+                        0 0 20px #fff,
+                        0 0 30px #fff,
+                        0 0 40px #FF1177,
+                        0 0 50px #FF1177,
+                        0 0 60px #FF1177,
+                        0 0 70px #FF1177,
+                        0 0 80px #FF1177;
+    }
+    to{
+        text-shadow:    0 0  5px #fff,
+                        0 0 10px #fff,
+                        0 0 15px #fff,
+                        0 0 20px #f00,
+                        0 0 25px #f00,
+                        0 0 30px #f00,
+                        0 0 35px #f00,
+                        0 0 40px #f00;
+    }
+}
+@keyframes text-glow{
+    from{
+        text-shadow:    0 0  2px #fff,
+                        0 0  8px #fff,
+                        0 0 16px #fff,
+                        0 0 24px #FF1177,
+                        0 0 32px #FF1177,
+                        0 0 40px #FF1177,
+                        0 0 50px #FF1177,
+                        0 0 60px #FF1177;
+    }
+    to{
+        text-shadow:    0 0 1px #fff,
+                        0 0 4px #fff,
+                        0 0 8px #fff,
+                        0 0 12px #f00,
+                        0 0 16px #f00,
+                        0 0 20px #f00,
+                        0 0 25px #f00,
+                        0 0 30px #f00;
+    }
+}
+//box glow
+@keyframes box-glow{
+    from{
+        background-color: #eee;
+        box-shadow:
+                0 0  60px  60px #fff,
+                0 0 100px 120px #e0e,
+                0 0 200px 180px #e00;
+    }
+    to{
+        background-color: #aaa;
+        box-shadow:
+                0 0  60px  90px #aaa,
+                0 0 100px 180px #a0a,
+                0 0 200px 270px #a00;
+    }
+}

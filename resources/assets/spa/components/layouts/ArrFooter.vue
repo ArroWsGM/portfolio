@@ -17,7 +17,8 @@
                         <arr-tooltip tooltip="Bulma: a flexbox framework"><i class="arricon arricon-bulma"></i></arr-tooltip>
                         <arr-tooltip tooltip="HTML5"><i class="fa fa-html5"></i></arr-tooltip>
                         <arr-tooltip tooltip="CSS3"><i class="fa fa-css3"></i></arr-tooltip>
-                        <a href="/old">{{ i18n.old }} <i class="fa fa-hand-o-left" aria-hidden="true"></i></a>
+                        <arr-tooltip tooltip="See on Github"><a href="https://github.com/ArroWsGM"><i class="fa fa-github"></i></a></arr-tooltip>
+                        <a href="/old" class="mleft-10">{{ i18n.old }} <i class="fa fa-hand-o-left" aria-hidden="true"></i></a>
                     </p>
                 </div>
             </div>

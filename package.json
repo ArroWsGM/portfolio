@@ -41,6 +41,7 @@
     "sass-loader": "^5.0.1",
     "simple-vue-validator": "^0.13.2",
     "style-loader": "^0.16.1",
+    "tinymce": "^4.6.1",
     "url-loader": "^0.5.8",
     "vue": "^2.2.1",
     "vue-loader": "^11.1.4",

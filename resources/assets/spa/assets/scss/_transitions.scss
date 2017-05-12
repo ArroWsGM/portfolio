@@ -1,0 +1,38 @@
+//default
+.v-enter{
+    transform: translateY(-50px);
+    opacity: 0;
+}
+.v-enter-active, .v-leave-active{
+    transition: .25s;
+}
+.v-enter-to, .v-leave{
+    transform: translateY(0);
+    opacity: 1;
+}
+.v-leave-to{
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
+//router view transition
+.slide-enter{
+    transform: translateX(50%);
+    opacity: 0;
+}
+.slide-enter-active, .slide-leave-active{
+    transition: .25s;
+}
+.slide-enter-to, .slide-leave{
+    transform: translateX(0%);
+    opacity: 1;
+}
+.slide-leave-to{
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+//layout color transition
+.hero{
+    transition: color, background-color 1s;
+}

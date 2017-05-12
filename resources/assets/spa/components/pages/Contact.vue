@@ -369,21 +369,3 @@
         ]
     }
 </script>
-
-<style scoped>
-    .v-enter{
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    .v-enter-active, .v-leave-active{
-        transition: .25s;
-    }
-    .v-enter-to, .v-leave{
-        transform: translateY(0);
-        opacity: 1;
-    }
-    .v-leave-to{
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-</style>

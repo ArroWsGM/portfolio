@@ -5,6 +5,7 @@ use DB;
 use App\Admin\Setting;
 use App\Admin\Message;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 use Faker\Generator as FakerGenerator;
 use Faker\Factory as FakerFactory;
@@ -32,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(FakerGenerator::class, function () {
             return FakerFactory::create('uk_UA');
         });
+
+        Schema::defaultStringLength(191);
     }
 
     /**

@@ -20,6 +20,7 @@ elixir(function(mix) {
     mix.less('style_admin.less')
     	.sass('bootstrap.scss')
     	.sass('font-awesome.scss')
+    	.sass('arricons.scss')
     	//.version('/css/style_admin.css')
     	.scripts(['script_admin.js'], 'public/js/script_admin.js');
     	//.copy(bootstrapPath + '/fonts', 'public/fonts')
